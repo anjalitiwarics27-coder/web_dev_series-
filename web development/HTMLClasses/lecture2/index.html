@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How the Internet Works — Orientation Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#111823;
+    --panel:#182031;
+    --panel-hi:#1e2a3f;
+    --line: rgba(219,228,240,.10);
+    --ink:#e7ecf2;
+    --dim:#8b96a8;
+    --amber:#e8a33d;
+    --cyan:#5fb3ad;
+    --coral:#e2685a;
+    --violet:#9a8cd6;
+    --sans:'Inter', sans-serif;
+    --disp:'Space Grotesk', sans-serif;
+    --mono:'JetBrains Mono', monospace;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--sans); line-height:1.6;
+    background-image:
+      radial-gradient(circle at 15% 8%, rgba(232,163,61,.06), transparent 40%),
+      radial-gradient(circle at 85% 30%, rgba(95,179,173,.07), transparent 45%);
+  }
+  .wrap{ max-width:920px; margin:0 auto; padding:0 26px; }
+ 
+  /* ---------- HEADER ---------- */
+  header.top{ padding:46px 0 8px; }
+  .brandrow{
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:var(--mono); font-size:12px; color:var(--dim); letter-spacing:.03em;
+    padding-bottom:20px; border-bottom:1px solid var(--line);
+  }
+  .brandrow .ping{ display:flex; align-items:center; gap:7px; }
+  .brandrow .dot{ width:7px; height:7px; border-radius:50%; background:var(--cyan); box-shadow:0 0 8px var(--cyan); }
+  h1.title{
+    font-family:var(--disp); font-weight:700;
+    font-size:clamp(34px,5.6vw,58px); line-height:1.06;
+    margin:26px 0 12px; max-width:16ch;
+  }
+  h1.title .q{ color:var(--amber); }
+  p.sub{ color:var(--dim); font-size:16.5px; max-width:60ch; margin:0 0 40px; }
+  p.sub b{ color:var(--cyan); font-weight:600; }
+ 
+  /* ---------- HERO SIGNAL CHAIN ---------- */
+  .chain{
+    display:flex; align-items:center; gap:0; flex-wrap:wrap;
+    background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    padding:28px 22px; margin-bottom:52px;
+  }
+  .node{
+    flex:1 1 110px; text-align:center; padding:8px 6px; position:relative;
+  }
+  .node .ic{ font-family:var(--mono); font-size:26px; margin-bottom:8px; }
+  .node .lbl{ font-family:var(--disp); font-weight:600; font-size:14.5px; }
+  .node .sub{ font-family:var(--mono); font-size:10.5px; color:var(--dim); margin-top:3px; }
+  .link{
+    flex:0 0 auto; width:42px; height:1px; background:var(--line); position:relative;
+    align-self:center; margin:0 -2px;
+  }
+  .link::after{
+    content:"›"; position:absolute; right:-6px; top:50%; transform:translateY(-50%);
+    color:var(--cyan); font-size:16px;
+  }
+  @media(max-width:700px){ .link{ display:none; } }
+ 
+  /* ---------- SECTIONS ---------- */
+  section{ padding:46px 0; border-top:1px solid var(--line); }
+  section:first-of-type{ border-top:none; }
+  .kicker{
+    font-family:var(--mono); font-size:11.5px; color:var(--amber);
+    letter-spacing:.08em; margin-bottom:8px;
+  }
+  h2{
+    font-family:var(--disp); font-weight:600; font-size:27px; margin:0 0 10px;
+  }
+  p.lede{ color:var(--dim); max-width:64ch; font-size:15px; margin:0 0 26px; }
+ 
+  /* building blocks cards */
+  .blocks{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  @media(max-width:720px){ .blocks{ grid-template-columns:1fr 1fr; } }
+  @media(max-width:480px){ .blocks{ grid-template-columns:1fr; } }
+  .block{
+    background:var(--panel); border:1px solid var(--line); border-radius:8px;
+    padding:16px 15px;
+  }
+  .block .t{ font-family:var(--mono); font-size:12.5px; color:var(--cyan); margin-bottom:6px; }
+  .block .d{ font-size:13.5px; color:#c6cedb; }
+ 
+  /* ---------- NETWORK RINGS ---------- */
+  .rings-wrap{ display:flex; gap:36px; align-items:center; flex-wrap:wrap; }
+  .rings{ position:relative; width:280px; height:280px; flex:0 0 auto; margin:0 auto; }
+  .ring{
+    position:absolute; border-radius:50%; border:1px dashed var(--line);
+    display:flex; align-items:flex-start; justify-content:center;
+    top:50%; left:50%; transform:translate(-50%,-50%);
+  }
+  .ring span{
+    font-family:var(--mono); font-size:10px; color:var(--dim); margin-top:8px; letter-spacing:.05em;
+  }
+  .r1{ width:70px; height:70px; }
+  .r2{ width:140px; height:140px; }
+  .r3{ width:210px; height:210px; }
+  .r4{ width:280px; height:280px; }
+  .r1{ background:rgba(232,163,61,.14); border-color:var(--amber); }
+  .r2{ background:transparent; border-color:var(--cyan); }
+  .r3{ background:transparent; border-color:var(--violet); }
+  .r4{ background:transparent; border-color:var(--coral); }
+  .center-dot{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    font-size:18px;
+  }
+  .netlegend{ flex:1 1 260px; display:flex; flex-direction:column; gap:12px; }
+  .netitem{
+    display:grid; grid-template-columns:56px 1fr; gap:12px;
+    padding:12px 14px; background:var(--panel); border:1px solid var(--line); border-radius:8px;
+  }
+  .netitem .code{ font-family:var(--mono); font-weight:600; font-size:13px; align-self:center; }
+  .netitem .code.pan{ color:var(--amber); }
+  .netitem .code.lan{ color:var(--cyan); }
+  .netitem .code.man{ color:var(--violet); }
+  .netitem .code.wan{ color:var(--coral); }
+  .netitem b{ font-family:var(--disp); font-size:14.5px; display:block; margin-bottom:2px; }
+  .netitem p{ margin:0; font-size:13px; color:var(--dim); }
+ 
+  /* client server */
+  .cs{ display:flex; align-items:center; justify-content:center; gap:0; flex-wrap:wrap; }
+  .cs-box{
+    background:var(--panel); border:1px solid var(--line); border-radius:8px;
+    padding:22px 26px; text-align:center; flex:0 0 150px;
+  }
+  .cs-box .ic{ font-size:26px; margin-bottom:6px; }
+  .cs-box .name{ font-family:var(--disp); font-weight:600; font-size:16px; }
+  .cs-box .role{ font-family:var(--mono); font-size:11px; color:var(--dim); margin-top:4px; }
+  .cs-mid{ display:flex; flex-direction:column; gap:10px; padding:0 22px; flex:0 0 auto; }
+  .cs-mid .msg{
+    font-family:var(--mono); font-size:11px; padding:6px 10px; border-radius:20px;
+    border:1px solid var(--line); white-space:nowrap;
+  }
+  .cs-mid .req{ color:var(--amber); border-color:var(--amber); }
+  .cs-mid .res{ color:var(--cyan); border-color:var(--cyan); align-self:flex-end; }
+ 
+  /* IP phonebook analogy */
+  .phonebook{
+    background:var(--panel); border:1px solid var(--line); border-radius:8px;
+    overflow:hidden;
+  }
+  .pb-row{
+    display:grid; grid-template-columns:1fr 1fr; padding:11px 16px;
+    border-top:1px solid var(--line); font-family:var(--mono); font-size:13px;
+  }
+  .pb-row:first-child{ border-top:none; background:var(--panel-hi); color:var(--dim); font-size:11px; }
+  .pb-row span:last-child{ color:var(--cyan); text-align:right; }
+  .pb-note{ margin-top:14px; font-size:13.5px; color:var(--dim); }
+ 
+  /* DNS story steps */
+  .steps{ display:flex; flex-direction:column; gap:0; }
+  .step{
+    display:grid; grid-template-columns:28px 1fr; gap:14px;
+    padding:14px 0; border-top:1px dashed var(--line);
+  }
+  .step:first-child{ border-top:none; }
+  .step .n{ font-family:var(--mono); color:var(--amber); font-size:13px; padding-top:2px; }
+  .step p{ margin:0; font-size:14.5px; }
+  .step .who{ font-family:var(--mono); font-size:10.5px; color:var(--dim); display:block; margin-bottom:2px; letter-spacing:.05em; }
+ 
+  /* terminal */
+  .terminal{
+    background:#0c1119; border:1px solid var(--line); border-radius:8px;
+    padding:16px 18px; font-family:var(--mono); font-size:12.3px; color:#c9d6e3;
+    overflow-x:auto; margin-top:22px;
+  }
+  .terminal .win-dots{ display:flex; gap:6px; margin-bottom:12px; }
+  .terminal .win-dots span{ width:9px; height:9px; border-radius:50%; }
+  .terminal .win-dots span:nth-child(1){ background:#e2685a; }
+  .terminal .win-dots span:nth-child(2){ background:#e8a33d; }
+  .terminal .win-dots span:nth-child(3){ background:#5fb3ad; }
+  .terminal .prompt{ color:var(--cyan); }
+  .terminal .out{ color:var(--dim); }
+  .terminal .hi{ color:#f0d9a6; }
+ 
+  /* ip version compare */
+  .twocol{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media(max-width:720px){ .twocol{ grid-template-columns:1fr; } }
+  .verpanel{
+    background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:20px;
+  }
+  .verpanel h3{ font-family:var(--disp); font-size:19px; margin:0 0 6px; }
+  .verpanel .addr{
+    font-family:var(--mono); font-size:12.5px; background:#0c1119; padding:8px 10px;
+    border-radius:6px; margin:10px 0; word-break:break-all; color:var(--cyan);
+  }
+  .verpanel ul{ margin:8px 0 0; padding-left:18px; font-size:13.5px; color:var(--dim); }
+  .verpanel li{ margin-bottom:5px; }
+  .verpanel.v4 .addr{ color:var(--amber); }
+ 
+  /* summary */
+  footer{ padding:48px 0 60px; }
+  table.summary{ width:100%; border-collapse:collapse; font-size:14px; }
+  table.summary th, table.summary td{ text-align:left; padding:11px 8px; border-bottom:1px solid var(--line); }
+  table.summary th{ font-family:var(--mono); font-size:10.5px; color:var(--dim); font-weight:500; }
+  table.summary td:first-child{ font-family:var(--disp); font-weight:600; width:32%; color:var(--ink); }
+  table.summary td:last-child{ color:#c6cedb; }
+  .endnote{
+    margin-top:32px; font-family:var(--mono); font-size:11.5px; color:var(--dim);
+    display:flex; justify-content:space-between; border-top:1px solid var(--line); padding-top:16px;
+  }
+</style>
+</head>
+<body>
+ 
+<div class="wrap">
+  <header class="top">
+    <div class="brandrow">
+      <span>PW EARNERS · CODING &amp; WEB DEVELOPMENT</span>
+      <span class="ping"><span class="dot"></span>LECTURE 02</span>
+    </div>
+    <h1 class="title">How does the Internet <span class="q">actually</span> work?</h1>
+    <p class="sub">Summary notes by <b>Nishant Sir</b> — SIM se lekar DNS tak, poori journey ek data packet ki.</p>
+  </header>
+ 
+  <div class="chain">
+    <div class="node"><div class="ic">📱</div><div class="lbl">Phone</div><div class="sub">has a SIM</div></div>
+    <div class="link"></div>
+    <div class="node"><div class="ic">📡</div><div class="lbl">Mobile Tower</div><div class="sub">radio waves</div></div>
+    <div class="link"></div>
+    <div class="node"><div class="ic">🏢</div><div class="lbl">ISP</div><div class="sub">Jio · Airtel · Vi</div></div>
+    <div class="link"></div>
+    <div class="node"><div class="ic">🌐</div><div class="lbl">Internet</div><div class="sub">rest of the world</div></div>
+  </div>
+ 
+  <section>
+    <div class="kicker">01 — GETTING ONLINE</div>
+    <h2>SIM, ISP aur Broadband ke basics</h2>
+    <p class="lede">Jab tum "internet chalate ho," asal mein tum ek real company se, real infrastructure use karne ka access khareed rahe ho.</p>
+    <div class="blocks">
+      <div class="block"><div class="t">sim_card</div><div class="d">Chhota chip jo phone ko telecom company ke paas identify karta hai — ek ID card ki tarah.</div></div>
+      <div class="block"><div class="t">isp</div><div class="d">Jio, Airtel, Vi, BSNL — jo towers/cables ke maalik hain aur internet access bechte hain.</div></div>
+      <div class="block"><div class="t">mobile_tower</div><div class="d">Woh tall antenna structures — phone inse radio waves ke through baat karta hai.</div></div>
+      <div class="block"><div class="t">data</div><div class="d">Actual info jo travel karti hai — webpage, video, message. Measured in MB/GB.</div></div>
+      <div class="block"><div class="t">recharge</div><div class="d">ISP ko payment — fixed data + calling, fixed dino ke liye valid.</div></div>
+      <div class="block"><div class="t">broadband</div><div class="d">Ghar tak seedha wired (cable/fiber) connection — mobile tower ke bina.</div></div>
+      <div class="block"><div class="t">router_modem</div><div class="d">Broadband signal ko WiFi mein convert karne wala box, blinking lights ke saath.</div></div>
+      <div class="block"><div class="t">wifi</div><div class="d">Router se wireless connection — "connected but no internet" bhi possible hai!</div></div>
+    </div>
+  </section>
+ 
+  <section>
+    <div class="kicker">02 — SCALE OF CONNECTIONS</div>
+    <h2>Network ke 4 Types</h2>
+    <p class="lede">Network matlab do ya zyada devices jo aapas mein baat kar sakte hain. Size ke hisaab se 4 categories.</p>
+    <div class="rings-wrap">
+      <div class="rings">
+        <div class="ring r4"><span>WAN</span></div>
+        <div class="ring r3"><span>MAN</span></div>
+        <div class="ring r2"><span>LAN</span></div>
+        <div class="ring r1"></div>
+        <div class="center-dot">📱</div>
+      </div>
+      <div class="netlegend">
+        <div class="netitem"><span class="code pan">PAN</span><div><b>Personal Area Network</b><p>Kuch meters ka range — phone se Bluetooth earbuds ya smartwatch.</p></div></div>
+        <div class="netitem"><span class="code lan">LAN</span><div><b>Local Area Network</b><p>Ek ghar, classroom, ya office floor — jaise home WiFi ke sab devices.</p></div></div>
+        <div class="netitem"><span class="code man">MAN</span><div><b>Metropolitan Area Network</b><p>Poore city ya bade campus ki multiple LANs — jaise university ke sab departments.</p></div></div>
+        <div class="netitem"><span class="code wan">WAN</span><div><b>Wide Area Network</b><p>Cities, states, countries ya poori duniya — ISP ka nationwide backbone.</p></div></div>
+      </div>
+    </div>
+  </section>
+ 
+  <section>
+    <div class="kicker">03 — HOW REQUESTS TRAVEL</div>
+    <h2>Client–Server Model</h2>
+    <p class="lede">Har baar jab koi website khulti hai, ek "request → response" conversation ho rahi hoti hai.</p>
+    <div class="cs">
+      <div class="cs-box"><div class="ic">💻</div><div class="name">Client</div><div class="role">browser / app — jo maangta hai</div></div>
+      <div class="cs-mid">
+        <div class="msg req">→ request: "give me homepage"</div>
+        <div class="msg res">← response: HTML / video / data</div>
+      </div>
+      <div class="cs-box"><div class="ic">🖥️</div><div class="name">Server</div><div class="role">data center — jo deta hai</div></div>
+    </div>
+  </section>
+ 
+  <section>
+    <div class="kicker">04 — FINDING A DEVICE</div>
+    <h2>IP Address — Internet ka Phone Number</h2>
+    <p class="lede">Jaise har insaan ka phone number unique hota hai, waise hi internet pe har device ka apna IP address hota hai.</p>
+    <div class="phonebook">
+      <div class="pb-row"><span>domain</span><span>ip address</span></div>
+      <div class="pb-row"><span>youtube.com</span><span>196.128.1.3</span></div>
+      <div class="pb-row"><span>google.com</span><span>196.128.1.8</span></div>
+      <div class="pb-row"><span>instagram.com</span><span>196.128.1.5</span></div>
+      <div class="pb-row"><span>x.com</span><span>196.128.1.24</span></div>
+      <div class="pb-row"><span>pw.com</span><span>196.128.1.4</span></div>
+    </div>
+    <p class="pb-note">Bilkul waise jaise phone mein "Varsha" naam save hota hai but asal mein call jaata hai uske number pe — waise hi "youtube.com" type karne pe request jaati hai uske IP address pe.</p>
+  </section>
+ 
+  <section>
+    <div class="kicker">05 — THE PHONEBOOK LOOKUP</div>
+    <h2>DNS (Domain Name System)</h2>
+    <p class="lede">DNS ek giant, distributed phonebook hai jo domain name ko IP address mein convert karta hai.</p>
+    <div class="steps">
+      <div class="step"><div class="n">01</div><p><span class="who">you</span>Type karte ho <b>youtube.com</b> aur Enter dabate ho.</p></div>
+      <div class="step"><div class="n">02</div><p><span class="who">browser</span>DNS server se poochta hai: "youtube.com ka IP address kya hai?"</p></div>
+      <div class="step"><div class="n">03</div><p><span class="who">dns</span>Jawab deta hai: "142.250.183.78"</p></div>
+      <div class="step"><div class="n">04</div><p><span class="who">browser</span>Ab exactly pata hai ki Earth pe kis computer se baat karni hai.</p></div>
+    </div>
+    <div class="terminal">
+      <div class="win-dots"><span></span><span></span><span></span></div>
+      <div><span class="prompt">~ %</span> nslookup google.com</div>
+      <div class="out">Non-authoritative answer:</div>
+      <div class="out">Name:&nbsp;&nbsp; google.com</div>
+      <div>Address: <span class="hi">192.178.193.139</span></div>
+      <br>
+      <div><span class="prompt">~ %</span> nslookup youtube.com</div>
+      <div class="out">Non-authoritative answer:</div>
+      <div class="out">Name:&nbsp;&nbsp; youtube.com</div>
+      <div>Address: <span class="hi">142.251.220.78</span></div>
+    </div>
+  </section>
+ 
+  <section>
+    <div class="kicker">06 — ADDRESS FORMATS</div>
+    <h2>IPv4 vs IPv6</h2>
+    <p class="lede">Duniya mein devices itni badh gayi ki purana format khatam hone laga — isliye naya format aaya.</p>
+    <div class="twocol">
+      <div class="verpanel v4">
+        <h3>IPv4</h3>
+        <div class="addr">142.250.183.78</div>
+        <ul>
+          <li>4 numbers (0–255), dots se separated</li>
+          <li>32-bit — total ~4.3 billion unique addresses</li>
+          <li>Purana, ab addresses khatam ho rahe hain</li>
+        </ul>
+      </div>
+      <div class="verpanel">
+        <h3>IPv6</h3>
+        <div class="addr">2401:4900:1c20:abcd:0000:0000:0000:1a2b</div>
+        <ul>
+          <li>Hexadecimal + colons se banta hai</li>
+          <li>128-bit — undecillion addresses possible</li>
+          <li>Naya format, shortage solve karta hai</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+ 
+  <footer>
+    <h2>Quick Summary</h2>
+    <table class="summary">
+      <tr><th>Term</th><th>One-liner</th></tr>
+      <tr><td>SIM Card</td><td>Phone ko telecom company ke paas identify karta hai</td></tr>
+      <tr><td>ISP</td><td>Company jo internet infrastructure aur access bechti hai</td></tr>
+      <tr><td>PAN / LAN / MAN / WAN</td><td>Personal → Local → City → Global scale ka network</td></tr>
+      <tr><td>Client / Server</td><td>Client maangta hai, Server jawab deta hai</td></tr>
+      <tr><td>IP Address</td><td>Har device ka unique internet "phone number"</td></tr>
+      <tr><td>DNS</td><td>Domain name ko IP address mein convert karta hai</td></tr>
+      <tr><td>IPv4 vs IPv6</td><td>32-bit purana format vs 128-bit naya format</td></tr>
+    </table>
+    <div class="endnote">
+      <span>PW Earners — Coding &amp; Web Development</span>
+      <span>Lecture 02 · How the Internet Works</span>
+    </div>
+  </footer>
+</div>
+ 
+</body>
+</html>
