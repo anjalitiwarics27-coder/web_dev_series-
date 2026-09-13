@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full Stack Web Development — Orientation Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#221f1d;
+    --paper:#f2ecdc;
+    --paper-dim:#e8e0cb;
+    --tomato:#c1440e;
+    --tomato-deep:#9a350a;
+    --basil:#47563a;
+    --butter:#e4b54a;
+    --rule: rgba(34,31,29,.18);
+    --serif: 'Fraunces', serif;
+    --sans: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+ 
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+ 
+  .wrap{ max-width:920px; margin:0 auto; padding:0 28px; }
+ 
+  /* ---------- HEADER ---------- */
+  header.top{
+    padding:44px 0 30px;
+    border-bottom:2px solid var(--ink);
+  }
+  .brandrow{
+    display:flex; align-items:baseline; justify-content:space-between;
+    font-family:var(--mono); font-size:12.5px; letter-spacing:.02em;
+  }
+  .brandrow .stamp{
+    border:1.5px solid var(--ink); padding:3px 9px; border-radius:3px;
+    transform:rotate(-2deg);
+  }
+  h1.hero-title{
+    font-family:var(--serif);
+    font-weight:600;
+    font-optical-sizing:auto;
+    font-size:clamp(38px, 6vw, 64px);
+    line-height:1.04;
+    margin:22px 0 10px;
+    max-width:14ch;
+  }
+  p.hero-sub{
+    font-size:17px;
+    max-width:56ch;
+    color:#3a352f;
+    margin:0 0 6px;
+  }
+  p.hero-sub b{ color:var(--tomato-deep); font-weight:600; }
+ 
+  /* ---------- ORDER TICKET HERO DIAGRAM ---------- */
+  section.ticket-hero{ padding:52px 0 20px; }
+  .ticket{
+    background:#fffdf6;
+    border:1.5px solid var(--ink);
+    border-radius:2px;
+    padding:30px 26px 26px;
+    position:relative;
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .ticket::before{
+    content:"ORDER TICKET · TABLE 01";
+    display:block;
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.08em;
+    color:#8a8375;
+    margin-bottom:18px;
+    border-bottom:1px dashed var(--rule);
+    padding-bottom:12px;
+  }
+  .flow{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:10px; flex-wrap:wrap;
+  }
+  .stage{
+    flex:1 1 150px;
+    text-align:center;
+    padding:18px 10px;
+    border-radius:3px;
+  }
+  .stage .real{
+    font-family:var(--mono); font-size:11.5px; color:#8a8375;
+    letter-spacing:.05em; margin-bottom:6px;
+  }
+  .stage .tech{
+    font-family:var(--serif); font-weight:600; font-size:22px;
+  }
+  .stage.table{ background:#f6e9c9; border:1.5px solid var(--butter); }
+  .stage.kitchen{ background:#f5ded1; border:1.5px solid var(--tomato); }
+  .stage.store{ background:#e3e7dc; border:1.5px solid var(--basil); }
+  .arrow{
+    font-family:var(--mono); font-size:13px; color:var(--ink);
+    display:flex; flex-direction:column; align-items:center; gap:2px;
+    flex:0 0 auto; padding:0 4px;
+  }
+  .arrow .lbl{ font-size:10.5px; color:#8a8375; }
+  .arrow .glyph{ font-size:20px; line-height:1; }
+ 
+  .ticket-foot{
+    margin-top:20px; padding-top:14px; border-top:1px dashed var(--rule);
+    font-family:var(--mono); font-size:12px; color:#5a5347;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px;
+  }
+  .ticket-foot .total{ color:var(--tomato-deep); font-weight:600; }
+ 
+  /* ---------- SECTIONS ---------- */
+  section{ padding:52px 0; border-bottom:1px solid var(--rule); }
+  section:last-of-type{ border-bottom:none; }
+  h2{
+    font-family:var(--serif); font-weight:600; font-size:28px;
+    margin:0 0 8px;
+  }
+  h2 .no{ font-family:var(--mono); font-size:14px; color:var(--tomato); margin-right:10px; }
+  p.lede{ color:#4a453d; max-width:64ch; margin:0 0 26px; font-size:15.5px; }
+ 
+  .cards3{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  @media(max-width:720px){ .cards3{ grid-template-columns:1fr; } }
+  .card{
+    border:1.5px solid var(--ink); border-radius:3px; padding:18px 16px;
+    background:#fffdf6;
+  }
+  .card h3{
+    font-family:var(--mono); font-size:13px; text-transform:none;
+    margin:0 0 8px; color:var(--tomato-deep); letter-spacing:.02em;
+  }
+  .card p{ margin:0; font-size:14.5px; color:#3a352f; }
+ 
+  /* frontend/backend example rows */
+  .examplerow{
+    display:grid; grid-template-columns:120px 1fr; gap:18px;
+    padding:16px 0; border-top:1px solid var(--rule);
+  }
+  .examplerow:first-of-type{ border-top:none; }
+  .examplerow .tag{
+    font-family:var(--mono); font-size:12px; color:#8a8375; padding-top:2px;
+  }
+  .examplerow .body b{ font-family:var(--serif); font-size:17px; font-weight:600; }
+  .examplerow .body p{ margin:4px 0 0; font-size:14.5px; color:#3a352f; }
+ 
+  /* roles */
+  .roles{ display:flex; flex-direction:column; gap:10px; }
+  .role{
+    display:flex; align-items:center; gap:14px;
+    padding:14px 16px; border:1.5px solid var(--ink); border-radius:3px;
+    background:#fffdf6;
+  }
+  .role.full{ background:#faf1d8; border-color:var(--butter); }
+  .role .dot{ width:10px; height:10px; border-radius:50%; flex:0 0 auto; }
+  .role.fe .dot{ background:var(--basil); }
+  .role.be .dot{ background:var(--tomato); }
+  .role.full .dot{ background:var(--tomato-deep); }
+  .role .name{ font-family:var(--serif); font-weight:600; font-size:16.5px; min-width:190px; }
+  .role .desc{ font-size:14px; color:#4a453d; }
+  .role.full .name::after{ content:" ✓"; color:var(--tomato-deep); }
+ 
+  /* mern grid */
+  .mern{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  @media(max-width:720px){ .mern{ grid-template-columns:1fr 1fr; } }
+  .mern .cell{
+    border:1.5px solid var(--ink); border-radius:3px; padding:16px 12px;
+    text-align:center; background:#fffdf6;
+  }
+  .mern .cell .letter{
+    font-family:var(--serif); font-weight:700; font-size:30px;
+    color:var(--tomato-deep);
+  }
+  .mern .cell .tech{ font-family:var(--mono); font-size:13px; margin-top:6px; }
+  .mern .cell .role{ font-size:12.5px; color:#8a8375; margin-top:3px; }
+ 
+  /* static vs dynamic */
+  .twocol{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media(max-width:720px){ .twocol{ grid-template-columns:1fr; } }
+  .panel{ border:1.5px solid var(--ink); border-radius:3px; padding:20px; background:#fffdf6; }
+  .panel h3{ font-family:var(--serif); font-weight:600; font-size:19px; margin:0 0 10px; }
+  .panel ul{ margin:0; padding-left:18px; font-size:14.5px; color:#3a352f; }
+  .panel li{ margin-bottom:6px; }
+  .panel.dyn{ background:#f5ded1; border-color:var(--tomato); }
+  .panel.stat{ background:#e9e2cf; }
+  .badge{
+    display:inline-block; font-family:var(--mono); font-size:11px;
+    background:var(--tomato); color:#fffdf6; padding:2px 8px; border-radius:20px;
+    margin-top:12px;
+  }
+ 
+  /* career paths */
+  .paths{ display:flex; gap:14px; flex-wrap:wrap; }
+  .path{
+    flex:1 1 160px; text-align:center; padding:22px 10px;
+    border:1.5px dashed var(--ink); border-radius:3px;
+  }
+  .path .check{ font-size:20px; color:var(--basil); }
+  .path .label{ font-family:var(--serif); font-weight:600; font-size:17px; margin-top:6px; }
+ 
+  /* checklist */
+  .checklist{ display:flex; flex-direction:column; gap:0; }
+  .check-item{
+    display:flex; gap:12px; align-items:baseline;
+    padding:10px 0; border-top:1px dashed var(--rule);
+    font-size:15px;
+  }
+  .check-item:first-child{ border-top:none; }
+  .check-item .arrow-ico{ font-family:var(--mono); color:var(--tomato); }
+ 
+  /* roadmap - numbered, since it IS a sequence */
+  .roadmap{ counter-reset:stage; display:flex; flex-direction:column; }
+  .stagecard{
+    display:grid; grid-template-columns:56px 1fr; gap:18px;
+    padding:20px 0; border-top:1px solid var(--rule); position:relative;
+  }
+  .stagecard:first-child{ border-top:none; }
+  .stagecard .num{
+    counter-increment:stage;
+    font-family:var(--serif); font-weight:700; font-size:26px; color:var(--tomato-deep);
+  }
+  .stagecard .num::before{ content: counter(stage, decimal-leading-zero); }
+  .stagecard h4{ font-family:var(--serif); font-weight:600; font-size:18px; margin:0 0 6px; }
+  .stagecard p{ margin:0; font-size:14.5px; color:#3a352f; }
+  .stagecard .tools{
+    display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;
+  }
+  .stagecard .tools span{
+    font-family:var(--mono); font-size:11.5px; background:var(--paper-dim);
+    border:1px solid var(--rule); padding:3px 8px; border-radius:20px;
+  }
+ 
+  /* footer summary table */
+  footer{ padding:50px 0 60px; }
+  table.summary{ width:100%; border-collapse:collapse; font-size:14.5px; }
+  table.summary th, table.summary td{
+    text-align:left; padding:11px 10px; border-bottom:1px solid var(--rule);
+  }
+  table.summary th{
+    font-family:var(--mono); font-size:11.5px; color:#8a8375; font-weight:500;
+  }
+  table.summary td:first-child{ font-family:var(--serif); font-weight:600; width:34%; }
+  .endnote{
+    margin-top:34px; font-family:var(--mono); font-size:12px; color:#8a8375;
+    display:flex; justify-content:space-between; border-top:2px solid var(--ink); padding-top:16px;
+  }
+</style>
+</head>
+<body>
+ 
+<div class="wrap">
+  <header class="top">
+    <div class="brandrow">
+      <span>PW EARNERS · CODING &amp; WEB DEVELOPMENT</span>
+      <span class="stamp">LECTURE 01</span>
+    </div>
+    <h1 class="hero-title">Orientation: Full Stack Web Development</h1>
+    <p class="hero-sub">Summary notes by <b>Nishant Sir</b> — samjho ki ek website kaise banti hai, kaun kya kaam karta hai, aur course ka pura roadmap.</p>
+  </header>
+ 
+  <section class="ticket-hero">
+    <div class="ticket">
+      <div class="flow">
+        <div class="stage table">
+          <div class="real">restaurant · table</div>
+          <div class="tech">Frontend</div>
+        </div>
+        <div class="arrow"><span class="glyph">→</span><span class="lbl">pasta order</span></div>
+        <div class="stage kitchen">
+          <div class="real">restaurant · kitchen</div>
+          <div class="tech">Backend</div>
+        </div>
+        <div class="arrow"><span class="glyph">↔</span><span class="lbl">ingredients</span></div>
+        <div class="stage store">
+          <div class="real">restaurant · store</div>
+          <div class="tech">Database</div>
+        </div>
+      </div>
+      <div class="ticket-foot">
+        <span>customer baithta hai table pe → order kitchen tak jaata hai → kitchen store se saaman leta hai → khana wapas table pe</span>
+        <span class="total">= FULL STACK</span>
+      </div>
+    </div>
+  </section>
+ 
+  <section>
+    <h2><span class="no">01</span>Web Development ke 3 Parts</h2>
+    <p class="lede">Har website in teen cheezon se milkar banti hai. Jo teeno handle kar sake, wahi Full Stack Developer hai.</p>
+    <div class="cards3">
+      <div class="card"><h3>frontend/</h3><p>Jo user ko dikhta hai — design, layout, buttons, UI.</p></div>
+      <div class="card"><h3>backend/</h3><p>Peeche server pe chalne wala logic aur processing.</p></div>
+      <div class="card"><h3>database/</h3><p>Jahan sara data — users, posts, files — store hota hai.</p></div>
+    </div>
+  </section>
+ 
+  <section>
+    <h2><span class="no">02</span>Real Apps mein Frontend vs Backend</h2>
+    <p class="lede">Insta aur YouTube jaise apps mein dono parts kaise kaam karte hain, dekho.</p>
+    <div class="examplerow">
+      <div class="tag">instagram</div>
+      <div class="body">
+        <b>Frontend</b> — reels, likes, comments jo screen pe dikhte hain.
+        <p><b>Backend</b> handles: username system, reel processing, uploads.</p>
+      </div>
+    </div>
+    <div class="examplerow">
+      <div class="tag">youtube</div>
+      <div class="body">
+        <b>Frontend</b> — thumbnails ka grid, video player, comment box.
+        <p>User "How to make website?" search karta hai → Backend message ko process karta hai → Database se reply aata hai → wapas Frontend pe result dikhta hai.</p>
+      </div>
+    </div>
+  </section>
+ 
+  <section>
+    <h2><span class="no">03</span>Developer Roles</h2>
+    <div class="roles">
+      <div class="role fe"><span class="dot"></span><span class="name">Frontend Developer</span><span class="desc">Sirf UI aur design side pe kaam karta hai.</span></div>
+      <div class="role be"><span class="dot"></span><span class="name">Backend Developer</span><span class="desc">Server logic + Database handle karta hai.</span></div>
+      <div class="role full"><span class="dot"></span><span class="name">Fullstack Developer</span><span class="desc">Frontend + Backend dono — sabse complete role.</span></div>
+    </div>
+  </section>
+ 
+  <section>
+    <h2><span class="no">04</span>The MERN Stack</h2>
+    <p class="lede">Full stack banane ke liye sabse popular technology combo.</p>
+    <div class="mern">
+      <div class="cell"><div class="letter">M</div><div class="tech">MongoDB</div><div class="role">database</div></div>
+      <div class="cell"><div class="letter">E</div><div class="tech">Express.js</div><div class="role">backend</div></div>
+      <div class="cell"><div class="letter">R</div><div class="tech">React</div><div class="role">frontend</div></div>
+      <div class="cell"><div class="letter">N</div><div class="tech">Node.js</div><div class="role">backend</div></div>
+    </div>
+  </section>
+ 
+  <section>
+    <h2><span class="no">05</span>Static vs Dynamic Websites</h2>
+    <div class="twocol">
+      <div class="panel stat">
+        <h3>Static Website</h3>
+        <ul>
+          <li>Sabhi users ko same content dikhta hai</li>
+          <li>Example: Restaurant, Business sites</li>
+        </ul>
+      </div>
+      <div class="panel dyn">
+        <h3>Dynamic Website</h3>
+        <ul>
+          <li>Har user ko different content milta hai</li>
+          <li>Example: Instagram, YouTube</li>
+        </ul>
+        <span class="badge">80–90% of today's websites</span>
+      </div>
+    </div>
+  </section>
+ 
+  <section>
+    <h2><span class="no">06</span>Project kyu banayein?</h2>
+    <p class="lede">Project banane se <b>learning</b> aur <b>skill</b> dono badhti hai — jaise ek chatting feature banana. Course ke baad career ke teen raaste:</p>
+    <div class="paths">
+      <div class="path"><div class="check">✓</div><div class="label">Job</div></div>
+      <div class="path"><div class="check">✓</div><div class="label">Freelancing</div></div>
+      <div class="path"><div class="check">✓</div><div class="label">Startup</div></div>
+    </div>
+  </section>
+ 
+  <section>
+    <h2><span class="no">07</span>Job Apply ke liye Chahiye</h2>
+    <div class="checklist">
+      <div class="check-item"><span class="arrow-ico">→</span> Resume</div>
+      <div class="check-item"><span class="arrow-ico">→</span> Portfolio Website (job apply ke liye)</div>
+      <div class="check-item"><span class="arrow-ico">→</span> Link &amp; Email</div>
+      <div class="check-item"><span class="arrow-ico">→</span> Discussion</div>
+    </div>
+  </section>
+ 
+  <section>
+    <h2><span class="no">08</span>Course Roadmap</h2>
+    <div class="roadmap">
+      <div class="stagecard">
+        <div class="num"></div>
+        <div>
+          <h4>Foundation</h4>
+          <p>Website ka base banana seekhoge, saath hi version control tools.</p>
+          <div class="tools"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Tailwind</span><span>Bootstrap</span><span>Git &amp; GitHub</span></div>
+        </div>
+      </div>
+      <div class="stagecard">
+        <div class="num"></div>
+        <div>
+          <h4>Frontend Advanced</h4>
+          <p>Component-based UI banana — jaise like/comment section wale reusable blocks.</p>
+          <div class="tools"><span>React</span></div>
+        </div>
+      </div>
+      <div class="stagecard">
+        <div class="num"></div>
+        <div>
+          <h4>Backend &amp; Database</h4>
+          <p>Server-side logic aur data handle karna seekhoge, phir ek pura fullstack project banega.</p>
+          <div class="tools"><span>Node.js</span><span>Express.js</span><span>Database</span><span>Fullstack Project</span></div>
+        </div>
+      </div>
+      <div class="stagecard">
+        <div class="num"></div>
+        <div>
+          <h4>Extra Advanced Bits</h4>
+          <p>Deployment aur real-time systems ke liye industry-level tools.</p>
+          <div class="tools"><span>AWS</span><span>Docker</span><span>CI/CD</span><span>WebSocket</span></div>
+        </div>
+      </div>
+      <div class="stagecard">
+        <div class="num"></div>
+        <div>
+          <h4>Next.js</h4>
+          <p>Ek hi framework mein Frontend + Backend dono handle karna.</p>
+          <div class="tools"><span>Next.js</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <footer>
+    <h2><span class="no">09</span>Quick Summary</h2>
+    <table class="summary">
+      <tr><th>Concept</th><th>One-liner</th></tr>
+      <tr><td>Frontend</td><td>UI jo user dekhta hai</td></tr>
+      <tr><td>Backend</td><td>Server ka logic aur processing</td></tr>
+      <tr><td>Database</td><td>Data ka storage</td></tr>
+      <tr><td>Full Stack</td><td>Frontend + Backend + Database sab</td></tr>
+      <tr><td>MERN</td><td>MongoDB, Express, React, Node.js</td></tr>
+      <tr><td>Static Website</td><td>Sabko same content</td></tr>
+      <tr><td>Dynamic Website</td><td>Har user ko alag content</td></tr>
+      <tr><td>Career Paths</td><td>Job / Freelancing / Startup</td></tr>
+    </table>
+    <div class="endnote">
+      <span>PW Earners — Coding &amp; Web Development</span>
+      <span>Lecture 01 · Orientation</span>
+    </div>
+  </footer>
+</div>
+ 
+</body>
