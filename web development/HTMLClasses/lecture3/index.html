@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML Boilerplate — Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #14151c;
+    --panel: #1b1d27;
+    --panel-line: #2a2c3a;
+    --text: #d9dae2;
+    --text-dim: #8b8da3;
+    --tag: #6fd6a3;
+    --attr: #e3a26f;
+    --string: #e39a9a;
+    --keyword: #7aa7e0;
+    --rule: #33354a;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Manrope', sans-serif;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection{ background: rgba(111,214,163,0.25); }
+ 
+  .wrap{
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 64px 24px 100px;
+  }
+ 
+  header.hero{
+    margin-bottom: 56px;
+  }
+  .eyebrow-line{
+    display:flex;
+    align-items:center;
+    gap: 12px;
+    color: var(--text-dim);
+    font-family: 'Fira Code', monospace;
+    font-size: 13px;
+    margin-bottom: 18px;
+  }
+  .eyebrow-line .dot{
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--tag);
+    flex-shrink: 0;
+  }
+  h1.title{
+    font-size: clamp(32px, 6vw, 46px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0 0 14px;
+    color: #fff;
+  }
+  h1.title .tag{ color: var(--tag); }
+  .subtitle{
+    color: var(--text-dim);
+    font-size: 16px;
+    max-width: 46ch;
+  }
+  .byline{
+    margin-top: 22px;
+    font-size: 14px;
+    color: var(--text-dim);
+    font-family: 'Fira Code', monospace;
+  }
+  .byline b{ color: var(--text); font-weight: 500; }
+ 
+  section{
+    margin-bottom: 52px;
+  }
+  section h2{
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 6px;
+    display:flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  section h2 .num{
+    font-family: 'Fira Code', monospace;
+    font-size: 14px;
+    color: var(--tag);
+    font-weight: 500;
+  }
+  section > .kicker{
+    color: var(--text-dim);
+    font-size: 14px;
+    margin: 0 0 20px;
+  }
+  p{ margin: 0 0 14px; color: var(--text); }
+  p.callout{
+    border-left: 3px solid var(--tag);
+    padding: 4px 0 4px 16px;
+    color: #eef0f5;
+    font-size: 15px;
+  }
+ 
+  .def-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 18px 0;
+  }
+  @media (max-width: 560px){
+    .def-grid{ grid-template-columns: 1fr; }
+  }
+  .def-card{
+    background: var(--panel);
+    border: 1px solid var(--panel-line);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .def-card .k{
+    font-family: 'Fira Code', monospace;
+    color: var(--tag);
+    font-size: 13px;
+    margin-bottom: 6px;
+    display:block;
+  }
+  .def-card .v{ font-size: 14.5px; color: var(--text); }
+ 
+  code.inline{
+    font-family: 'Fira Code', monospace;
+    background: rgba(122,167,224,0.12);
+    color: var(--keyword);
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-size: 0.9em;
+  }
+ 
+  .codeblock{
+    background: var(--panel);
+    border: 1px solid var(--panel-line);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 20px 0;
+  }
+  .codeblock .cb-head{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--panel-line);
+  }
+  .cb-head .cdot{ width:10px; height:10px; border-radius:50%; }
+  .cb-head .c1{background:#e3675f;} .cb-head .c2{background:#e3b45f;} .cb-head .c3{background:#6fd6a3;}
+  .cb-head .fname{
+    margin-left: 8px;
+    font-family: 'Fira Code', monospace;
+    font-size: 12.5px;
+    color: var(--text-dim);
+  }
+  pre{
+    margin: 0;
+    padding: 18px 20px;
+    overflow-x: auto;
+    font-family: 'Fira Code', monospace;
+    font-size: 13.5px;
+    line-height: 1.7;
+  }
+  .kw{ color: var(--keyword); }
+  .tg{ color: var(--tag); }
+  .at{ color: var(--attr); }
+  .st{ color: var(--string); }
+  .cm{ color: var(--text-dim); }
+ 
+  .flow{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-family: 'Fira Code', monospace;
+    font-size: 13px;
+    color: var(--text-dim);
+    background: var(--panel);
+    border: 1px solid var(--panel-line);
+    padding: 14px 18px;
+    border-radius: 10px;
+    margin: 16px 0;
+  }
+  .flow .step{ color: var(--text); }
+  .flow .arrow{ color: var(--tag); }
+ 
+  table.summary{
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0;
+    font-size: 14px;
+  }
+  table.summary th{
+    text-align: left;
+    color: var(--text-dim);
+    font-weight: 600;
+    font-size: 12.5px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--panel-line);
+  }
+  table.summary td{
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--rule);
+    color: var(--text);
+    vertical-align: top;
+  }
+  table.summary td code{
+    font-family: 'Fira Code', monospace;
+    color: var(--keyword);
+    font-size: 12.5px;
+  }
+  table.summary tr:last-child td{ border-bottom: none; }
+ 
+  .divider{
+    height: 1px;
+    background: linear-gradient(90deg, var(--panel-line), transparent);
+    margin: 0 0 52px;
+  }
+ 
+  footer{
+    color: var(--text-dim);
+    font-family: 'Fira Code', monospace;
+    font-size: 12.5px;
+    border-top: 1px solid var(--panel-line);
+    padding-top: 22px;
+    margin-top: 20px;
+  }
+ 
+  @media (prefers-reduced-motion: no-preference){
+    section{ animation: rise 0.5s ease both; }
+  }
+  @keyframes rise{
+    from{ opacity: 0; transform: translateY(8px); }
+    to{ opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+ 
+  <header class="hero">
+    <div class="eyebrow-line"><span class="dot"></span> index.html — Lecture 03</div>
+    <h1 class="title">HTML <span class="tag">Boilerplate</span> &amp; Document Structure</h1>
+    <p class="subtitle">Coding &amp; Web Development series ke notes — har tag ka matlab, simple Hinglish mein.</p>
+    <div class="byline">Coding &amp; Web Development · Summary Notes · By <b>Nishant Sir</b></div>
+  </header>
+ 
+  <section>
+    <h2><span class="num">01</span> Coding Kya Hai?</h2>
+    <p class="callout">Coding = computer ko instructions dena, ek aisi language mein jo computer samajh sake.</p>
+    <p>Simple shabdon mein — <code class="inline">Coding = Set of Instructions</code> jo computer ko diye jaate hain.</p>
+  </section>
+ 
+  <section>
+    <h2><span class="num">02</span> HTML Kya Hai?</h2>
+    <p class="kicker">HyperText Markup Language</p>
+    <div class="def-grid">
+      <div class="def-card">
+        <span class="k">HyperText</span>
+        <span class="v">Aisa text jo doosre text/pages se link hota hai — jaise links jo aap click karte ho.</span>
+      </div>
+      <div class="def-card">
+        <span class="k">Markup Language</span>
+        <span class="v">Content ko "markup" karta hai — browser ko batata hai "yeh heading hai", "yeh paragraph hai", "yeh image hai".</span>
+      </div>
+    </div>
+    <p>HTML ka use hota hai <b>website/webpage</b> banane ke liye — yeh unka structure/code hota hai.</p>
+  </section>
+ 
+  <section>
+    <h2><span class="num">03</span> Code Editor &amp; Extensions</h2>
+    <p>Code likhne ke liye ek <b>Code Editor</b> chahiye — <code class="inline">VS Code</code> sabse popular hai. VS Code ek <b>IDE</b> hai — Integrated Development Environment.</p>
+    <p><b>Extensions</b> ek tarah ke add-ons hote hain jo VS Code mein extra features add karte hain — jaise mobile mein apps install karte ho.</p>
+    <div class="def-grid">
+      <div class="def-card"><span class="k">.html</span><span class="v">HTML file</span></div>
+      <div class="def-card"><span class="k">.mp4</span><span class="v">Video file</span></div>
+    </div>
+  </section>
+ 
+  <section>
+    <h2><span class="num">04</span> index.html Hi Kyun?</h2>
+    <p class="callout">"index" ka matlab hota hai "main / starting point" — jaise kisi book ka Index page batata hai ki content kahan se shuru hota hai.</p>
+    <p>Isliye file ka naam hamesha <code class="inline">index.html</code> rakha jaata hai — yeh ek <b>convention (rule)</b> hai.</p>
+  </section>
+ 
+  <section>
+    <h2><span class="num">05</span> Boilerplate Code</h2>
+    <p><b>Boilerplate Code</b> = ek fixed/ready-made structure jo har HTML file mein repeat hota hai — isse baar baar type nahi karna padta.</p>
+    <div class="flow">
+      <span class="step">VS Code</span><span class="arrow">→</span>
+      <span class="step">HTML file banao</span><span class="arrow">→</span>
+      <span class="step">Boilerplate likho</span><span class="arrow">→</span>
+      <span class="step">Browser mein khol kar dekho</span>
+    </div>
+    <p>VS Code shortcut: <code class="inline">! + Tab / Enter</code></p>
+  </section>
+ 
+  <section>
+    <h2><span class="num">06</span> Full Boilerplate Structure</h2>
+    <div class="codeblock">
+      <div class="cb-head">
+        <span class="cdot c1"></span><span class="cdot c2"></span><span class="cdot c3"></span>
+        <span class="fname">index.html</span>
+      </div>
+      <pre><span class="cm">&lt;!DOCTYPE html&gt;</span>
+<span class="tg">&lt;html</span> <span class="at">lang</span>=<span class="st">"en"</span><span class="tg">&gt;</span>
+  <span class="tg">&lt;head&gt;</span>
+    <span class="tg">&lt;meta</span> <span class="at">charset</span>=<span class="st">"UTF-8"</span><span class="tg">&gt;</span>
+    <span class="tg">&lt;meta</span> <span class="at">name</span>=<span class="st">"viewport"</span> <span class="at">content</span>=<span class="st">"width=device-width, initial-scale=1.0"</span><span class="tg">&gt;</span>
+    <span class="tg">&lt;title&gt;</span>Document<span class="tg">&lt;/title&gt;</span>
+  <span class="tg">&lt;/head&gt;</span>
+  <span class="tg">&lt;body&gt;</span>
+ 
+  <span class="tg">&lt;/body&gt;</span>
+<span class="tg">&lt;/html&gt;</span></pre>
+    </div>
+  </section>
+ 
+  <section>
+    <h2><span class="num">07</span> Line-by-Line Explanation</h2>
+ 
+    <p><code class="inline">&lt;!DOCTYPE html&gt;</code></p>
+    <p>Browser ko batata hai: <i>"Bhai, yeh HTML5 document hai."</i> Pehle HTML ke versions the (v1, v2, v3...) jo ab <b>deprecated</b> ho chuke hain — aaj current version HTML5 hai, isi ko browser read/render karta hai.</p>
+ 
+    <p><code class="inline">&lt;html lang="en"&gt; ... &lt;/html&gt;</code></p>
+    <p>Yeh <b>Root Element</b> hai — sab kuch isi ke andar aata hai. <code class="inline">lang="en"</code> batata hai page kis language mein hai (Hindi ke liye <code class="inline">lang="hin"</code>). Yeh accessibility aur <b>SEO</b> (Search Engine Optimization) ke liye important hai — screen readers aur Google ko language pata chalta hai.</p>
+ 
+    <p><code class="inline">&lt;head&gt; ... &lt;/head&gt;</code></p>
+    <p class="callout">Yeh woh information hai jo page pe dikhti nahi, but browser/search engines ke liye zaroori hai.</p>
+ 
+    <div class="def-grid">
+      <div class="def-card">
+        <span class="k">meta charset="UTF-8"</span>
+        <span class="v">Character encoding set karta hai — emojis, special characters (₹, é, अ) sab support karta hai.</span>
+      </div>
+      <div class="def-card">
+        <span class="k">meta viewport</span>
+        <span class="v">Mobile responsiveness ka foundation — page width device ke barabar, zoom level 1 se start.</span>
+      </div>
+      <div class="def-card">
+        <span class="k">title</span>
+        <span class="v">Browser tab pe jo text dikhta hai, wahi hai.</span>
+      </div>
+      <div class="def-card">
+        <span class="k">body</span>
+        <span class="v">Yahan sab kuch hota hai jo user actually dekhta hai — text, images, buttons.</span>
+      </div>
+    </div>
+  </section>
+ 
+  <div class="divider"></div>
+ 
+  <section>
+    <h2><span class="num">08</span> Quick Summary</h2>
+    <table class="summary">
+      <tr><th>Section</th><th>Kya karta hai</th></tr>
+      <tr><td><code>&lt;!DOCTYPE html&gt;</code></td><td>HTML5 declare karta hai</td></tr>
+      <tr><td><code>&lt;html lang="en"&gt;</code></td><td>Root element + language define</td></tr>
+      <tr><td><code>&lt;head&gt;</code></td><td>Invisible but important info (encoding, viewport, title)</td></tr>
+      <tr><td><code>meta charset</code></td><td>Character encoding set karta hai</td></tr>
+      <tr><td><code>meta viewport</code></td><td>Mobile responsiveness</td></tr>
+      <tr><td><code>&lt;title&gt;</code></td><td>Browser tab ka text</td></tr>
+      <tr><td><code>&lt;body&gt;</code></td><td>Visible content jo user dekhta hai</td></tr>
+    </table>
+  </section>
+ 
+  <footer>Notes prepared from Lecture 03 — Coding &amp; Web Development series</footer>
+</div>
+</body>
+</html>
