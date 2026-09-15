@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lecture 5 — Lists &amp; Tables</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --board:#20242b;
+    --board-line:#2c313a;
+    --chalk:#eef1f5;
+    --chalk-dim:#aeb6c2;
+    --red:#e6543f;
+    --yellow:#f2c14e;
+    --blue:#5b9bd9;
+    --paper:#f4f1ea;
+    --ink:#20242b;
+    --ink-dim:#5b6270;
+  }
+ 
+  *{box-sizing:border-box;}
+ 
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+ 
+  a{color:inherit;text-decoration:none;}
+ 
+  /* ---------- HERO (chalkboard) ---------- */
+  .board{
+    position:relative;
+    background-color:var(--board);
+    background-image:
+      linear-gradient(var(--board-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--board-line) 1px, transparent 1px);
+    background-size:28px 28px;
+    padding:64px 8vw 70px;
+    overflow:hidden;
+  }
+  .board::after{
+    content:"";
+    position:absolute;
+    left:0; right:0; bottom:0;
+    height:14px;
+    background:linear-gradient(180deg, transparent, rgba(0,0,0,.35));
+  }
+ 
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:#0c0d10;
+    color:var(--yellow);
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    padding:6px 14px;
+    border-radius:3px;
+    border:1px solid #3a3f48;
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--red);}
+ 
+  h1.title{
+    font-family:'Kalam', cursive;
+    color:var(--chalk);
+    font-size:clamp(48px, 8vw, 88px);
+    font-weight:700;
+    margin:22px 0 0 0;
+    line-height:0.95;
+    letter-spacing:0.5px;
+  }
+  .title .num{color:var(--red);}
+ 
+  .underline{
+    width:min(340px, 60%);
+    height:10px;
+    margin-top:6px;
+  }
+ 
+  h2.subtitle{
+    font-family:'Kalam', cursive;
+    color:var(--chalk-dim);
+    font-weight:400;
+    font-size:clamp(20px, 3vw, 28px);
+    margin:6px 0 0 0;
+  }
+ 
+  .board-foot{
+    margin-top:40px;
+    display:flex;
+    gap:26px;
+    flex-wrap:wrap;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    color:var(--chalk-dim);
+  }
+  .board-foot b{color:var(--chalk);font-weight:500;}
+ 
+  /* ---------- BODY ---------- */
+  main{
+    max-width:880px;
+    margin:0 auto;
+    padding:56px 8vw 90px;
+  }
+ 
+  section + section{margin-top:56px;}
+ 
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:6px;
+  }
+  .section-head .tick{
+    font-family:'Kalam', cursive;
+    font-size:26px;
+    color:var(--red);
+    line-height:1;
+  }
+  h3.section-title{
+    font-family:'Kalam', cursive;
+    font-size:30px;
+    margin:0;
+    font-weight:700;
+  }
+  .section-desc{
+    color:var(--ink-dim);
+    font-size:14.5px;
+    margin:2px 0 22px 40px;
+    max-width:60ch;
+  }
+ 
+  /* ledger list */
+  .ledger{
+    border-top:2px solid var(--ink);
+  }
+  .row{
+    display:grid;
+    grid-template-columns:34px 1fr auto;
+    align-items:center;
+    gap:16px;
+    padding:16px 4px;
+    border-bottom:1px solid #d9d4c6;
+    position:relative;
+  }
+  .row:hover{background:#ece7d9;}
+  .row .idx{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--ink-dim);
+  }
+  .row .info .name{
+    font-family:'JetBrains Mono', monospace;
+    font-weight:500;
+    font-size:15px;
+  }
+  .row .info .desc{
+    font-size:13px;
+    color:var(--ink-dim);
+    margin-top:3px;
+  }
+  .row .go{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--blue);
+    border:1px solid var(--blue);
+    padding:5px 11px;
+    border-radius:3px;
+    white-space:nowrap;
+  }
+  .row:hover .go{background:var(--blue);color:#fff;}
+ 
+  /* homework strip */
+  .hw-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+    gap:14px;
+  }
+  .hw-card{
+    border:1.5px solid var(--ink);
+    background:#fff;
+    padding:18px 18px 16px;
+    position:relative;
+  }
+  .hw-card .mark{
+    position:absolute;
+    top:10px;
+    right:12px;
+    font-family:'Kalam', cursive;
+    font-size:20px;
+    color:var(--red);
+    transform:rotate(-8deg);
+  }
+  .hw-card .name{
+    font-family:'JetBrains Mono', monospace;
+    font-weight:600;
+    font-size:15px;
+  }
+  .hw-card .desc{
+    font-size:13px;
+    color:var(--ink-dim);
+    margin-top:8px;
+    line-height:1.5;
+  }
+  .hw-card .go{
+    display:inline-block;
+    margin-top:14px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    padding:5px 12px;
+    border:1px solid var(--ink);
+  }
+  .hw-card:hover{background:var(--ink);border-color:var(--ink);}
+  .hw-card:hover .name, .hw-card:hover .desc{color:var(--paper);}
+  .hw-card:hover .go{border-color:var(--paper);color:var(--paper);}
+  .hw-card:hover .mark{color:var(--yellow);}
+ 
+  /* notes strip */
+  .notes-strip{
+    margin-top:56px;
+    border-top:2px dashed #c9c2ae;
+    padding-top:24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .notes-strip .label{
+    font-family:'Kalam', cursive;
+    font-size:20px;
+    color:var(--ink-dim);
+  }
+  .notes-links{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .notes-links a{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    padding:7px 13px;
+    border:1px solid var(--ink);
+    border-radius:3px;
+  }
+  .notes-links a:hover{background:var(--ink);color:var(--paper);}
+ 
+  footer{
+    text-align:center;
+    padding:26px 20px 40px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    color:var(--ink-dim);
+  }
+ 
+  @media (max-width:560px){
+    .row{grid-template-columns:24px 1fr;}
+    .row .go{display:none;}
+    .section-desc{margin-left:0;}
+  }
+</style>
+</head>
+<body>
+ 
+<div class="board">
+  <span class="eyebrow"><span class="dot"></span>CODING &amp; WEB DEVELOPMENT</span>
+  <h1 class="title">Lecture <span class="num">5</span></h1>
+  <svg class="underline" viewBox="0 0 340 10"><path d="M2,7 C90,2 250,9 338,4" stroke="#f2c14e" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+  <h2 class="subtitle">Lists &amp; Tables</h2>
+  <div class="board-foot">
+    <span><b>8</b> files</span>
+    <span><b>2</b> folders</span>
+    <span>lecture5Code / homework</span>
+  </div>
+</div>
+ 
+<main>
+ 
+  <section>
+    <div class="section-head">
+      <span class="tick">✓</span>
+      <h3 class="section-title">In-class code</h3>
+    </div>
+    <p class="section-desc">Examples built during the lecture — unordered, ordered and description lists, nested lists, and merged-cell tables.</p>
+ 
+    <div class="ledger">
+      <a class="row" href="lecture5Code/list.html">
+        <span class="idx">01</span>
+        <span class="info">
+          <span class="name">list.html</span>
+          <span class="desc">Unordered &amp; ordered lists — &lt;ul&gt;, &lt;ol&gt;, &lt;li&gt;</span>
+        </span>
+        <span class="go">open</span>
+      </a>
+      <a class="row" href="lecture5Code/description.html">
+        <span class="idx">02</span>
+        <span class="info">
+          <span class="name">description.html</span>
+          <span class="desc">Description list — &lt;dl&gt;, &lt;dt&gt;, &lt;dd&gt;</span>
+        </span>
+        <span class="go">open</span>
+      </a>
+      <a class="row" href="lecture5Code/PrecedingTextlist.html">
+        <span class="idx">03</span>
+        <span class="info">
+          <span class="name">PrecedingTextlist.html</span>
+          <span class="desc">Nested lists with preceding text and mixed markers</span>
+        </span>
+        <span class="go">open</span>
+      </a>
+      <a class="row" href="lecture5Code/table.html">
+        <span class="idx">04</span>
+        <span class="info">
+          <span class="name">table.html</span>
+          <span class="desc">Table basics with colspan &amp; rowspan merged cells</span>
+        </span>
+        <span class="go">open</span>
+      </a>
+      <a class="row" href="lecture5Code/table1.html">
+        <span class="idx">05</span>
+        <span class="info">
+          <span class="name">table1.html</span>
+          <span class="desc">Marks table — thead, tbody and th in practice</span>
+        </span>
+        <span class="go">open</span>
+      </a>
+    </div>
+  </section>
+ 
+  <section>
+    <div class="section-head">
+      <span class="tick">✓</span>
+      <h3 class="section-title">Homework</h3>
+    </div>
+    <p class="section-desc">Practice tables — from a straightforward timetable to nested colspan and rowspan.</p>
+ 
+    <div class="hw-grid">
+      <a class="hw-card" href="homework/table1.html">
+        <span class="mark">✓</span>
+        <div class="name">table1.html</div>
+        <div class="desc">Warm-up table exercise</div>
+        <span class="go">open file</span>
+      </a>
+      <a class="hw-card" href="homework/table2.html">
+        <span class="mark">M</span>
+        <div class="name">table2.html</div>
+        <div class="desc">Theek-thaak homework — weekly timetable</div>
+        <span class="go">open file</span>
+      </a>
+      <a class="hw-card" href="homework/table3.html">
+        <span class="mark">M</span>
+        <div class="name">table3.html</div>
+        <div class="desc">Crazy homework — seminar schedule, nested merges</div>
+        <span class="go">open file</span>
+      </a>
+    </div>
+  </section>
+ 
+  <div class="notes-strip">
+    <span class="label">Reading &amp; notes</span>
+    <div class="notes-links">
+      <a href="lecture5.md">lecture5.md</a>
+      <a href="Lists_and_Tables_Notes.pdf">Lists_and_Tables_Notes.pdf</a>
+    </div>
+  </div>
+ 
+</main>
+ 
+<footer>lecture5 / index.html — Lists &amp; Tables</footer>
+ 
+</body>
+</html>
