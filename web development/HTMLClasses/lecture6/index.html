@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lecture 06 — Lists, Tables &amp; Forms in HTML</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #12151B;
+    --surface: #191D25;
+    --surface-hover: #1F242E;
+    --border: #272D38;
+    --text: #E7EAF0;
+    --text-dim: #8C94A3;
+    --text-faint: #565E6C;
+    --html-orange: #FF7A45;
+    --html-orange-dim: rgba(255, 122, 69, 0.12);
+    --hw-teal: #4FD1C5;
+    --hw-teal-dim: rgba(79, 209, 197, 0.12);
+    --notes-violet: #B79CFF;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(255,122,69,0.07), transparent),
+      radial-gradient(ellipse 900px 500px at 90% 10%, rgba(79,209,197,0.06), transparent);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.5;
+    padding: 64px 24px 80px;
+  }
+
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+
+  .path {
+    font-size: 13px;
+    color: var(--text-faint);
+    letter-spacing: 0.02em;
+    margin-bottom: 18px;
+  }
+  .path span { color: var(--text-dim); }
+
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(32px, 5vw, 46px);
+    line-height: 1.1;
+    margin: 0 0 10px;
+    letter-spacing: -0.01em;
+  }
+  h1 em {
+    font-style: normal;
+    color: var(--html-orange);
+  }
+
+  .subhead {
+    color: var(--text-dim);
+    font-size: 15px;
+    max-width: 60ch;
+    margin: 0 0 48px;
+  }
+
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin: 0 0 16px;
+    color: var(--text);
+  }
+  .section-title .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex: none;
+  }
+  .section-title .count {
+    color: var(--text-faint);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 400;
+    font-size: 13px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 44px;
+  }
+  @media (max-width: 620px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  a.card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+    position: relative;
+  }
+  a.card:hover {
+    background: var(--surface-hover);
+    border-color: var(--card-accent, var(--html-orange));
+    transform: translateY(-1px);
+  }
+  a.card:focus-visible {
+    outline: 2px solid var(--card-accent, var(--html-orange));
+    outline-offset: 2px;
+  }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .tag-icon {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--card-accent, var(--html-orange));
+    flex: none;
+  }
+  .filename {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .filename .ext { color: var(--text-faint); }
+
+  .desc {
+    color: var(--text-dim);
+    font-size: 12.5px;
+    margin: 0;
+    padding-left: 22px;
+  }
+
+  .classcode a.card { --card-accent: var(--html-orange); }
+  .homework a.card { --card-accent: var(--hw-teal); }
+
+  .notes-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+  .notes-row:hover {
+    background: var(--surface-hover);
+    border-color: var(--notes-violet);
+  }
+  .notes-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .notes-left .tag-icon { color: var(--notes-violet); }
+  .notes-right {
+    font-size: 12px;
+    color: var(--text-faint);
+  }
+
+  footer {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    color: var(--text-faint);
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="path"><span>coding-and-web-dev</span> / lecture6</div>
+
+    <h1>Lecture <em>06</em></h1>
+    <p class="subhead">Lists, Tables &amp; Forms in HTML — class code walkthroughs and homework builds from Nishant Sir's session.</p>
+
+    <div class="classcode">
+      <div class="section-title">
+        <span class="dot" style="background: var(--html-orange);"></span>
+        Class Code
+        <span class="count">3 files</span>
+      </div>
+      <div class="grid">
+        <a class="card" href="ClassCode/aTag.html">
+          <div class="card-top">
+            <span class="tag-icon">&lt;/&gt;</span>
+            <span class="filename">aTag<span class="ext">.html</span></span>
+          </div>
+          <p class="desc">The anchor tag — href, target and clickable links.</p>
+        </a>
+
+        <a class="card" href="ClassCode/formCreation.html">
+          <div class="card-top">
+            <span class="tag-icon">&lt;/&gt;</span>
+            <span class="filename">formCreation<span class="ext">.html</span></span>
+          </div>
+          <p class="desc">Building a form: inputs, labels, select and fieldset.</p>
+        </a>
+
+        <a class="card" href="ClassCode/WelcomePage.html">
+          <div class="card-top">
+            <span class="tag-icon">&lt;/&gt;</span>
+            <span class="filename">WelcomePage<span class="ext">.html</span></span>
+          </div>
+          <p class="desc">Post-submit landing page for a form flow.</p>
+        </a>
+      </div>
+    </div>
+
+    <div class="homework">
+      <div class="section-title">
+        <span class="dot" style="background: var(--hw-teal);"></span>
+        Homework
+        <span class="count">3 files</span>
+      </div>
+      <div class="grid">
+        <a class="card" href="homework/employeeDetails.html">
+          <div class="card-top">
+            <span class="tag-icon">&lt;/&gt;</span>
+            <span class="filename">employeeDetails<span class="ext">.html</span></span>
+          </div>
+          <p class="desc">Fieldset-grouped form: name, ID, designation, phone.</p>
+        </a>
+
+        <a class="card" href="homework/NovellServicesLogin.html">
+          <div class="card-top">
+            <span class="tag-icon">&lt;/&gt;</span>
+            <span class="filename">NovellServicesLogin<span class="ext">.html</span></span>
+          </div>
+          <p class="desc">Login form with dropdown, radio roles and checkboxes.</p>
+        </a>
+
+        <a class="card" href="homework/PizzaDelivery.html">
+          <div class="card-top">
+            <span class="tag-icon">&lt;/&gt;</span>
+            <span class="filename">PizzaDelivery<span class="ext">.html</span></span>
+          </div>
+          <p class="desc">Full order form — customer details, toppings, textarea.</p>
+        </a>
+      </div>
+    </div>
+
+    <a class="notes-row" href="Lecture06_Lists_Tables_Forms_Notes.pdf">
+      <div class="notes-left">
+        <span class="tag-icon">&#9642;</span>
+        <span class="filename">Lecture06_Lists_Tables_Forms_Notes<span class="ext">.pdf</span></span>
+      </div>
+      <span class="notes-right">summary notes →</span>
+    </a>
+
+    <footer>
+      <span>lecture6/index.html</span>
+      <span>Coding and Web Development</span>
+    </footer>
+  </div>
+</body>
+</html>
