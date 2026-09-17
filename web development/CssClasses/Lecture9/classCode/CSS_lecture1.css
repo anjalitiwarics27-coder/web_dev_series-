@@ -1,0 +1,24 @@
+span{
+    
+    color: red;    
+}
+
+a,li{
+    color:brown;
+}
+.class{
+     color: aquamarine;
+}
+div p{
+    color:red;
+}
+div>p{
+    color:red;
+}
+h1+p{
+    color:red;
+}
+h1~p{
+    color:red;
+}
+
