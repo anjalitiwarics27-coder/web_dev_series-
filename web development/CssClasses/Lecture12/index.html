@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Lecture 11 & 12 - Practice Page</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Sticky navigation (position: sticky ka real example) -->
+  <header class="topbar">
+    <strong class="brand">CSS Practice</strong>
+    <nav>
+      <a href="#gradient">Gradient</a>
+      <a href="#border">Border</a>
+      <a href="#boxmodel">Box Model</a>
+      <a href="#boxsizing">box-sizing</a>
+      <a href="#display">Display</a>
+      <a href="#position">Position</a>
+      <a href="#units">Units</a>
+    </nav>
+  </header>
+
+  <main class="page">
+
+    <h1>Lecture 11 &amp; 12 - Practice Page</h1>
+    <p class="lead">Har section mein ek topic ka live demo hai. Code ko <code>style.css</code> mein dekho aur values badal ke try karo.</p>
+
+    <!-- ============ LECTURE 11 ============ -->
+
+    <!-- 1. BACKGROUND GRADIENT -->
+    <section id="gradient">
+      <h2>1. Background Gradient</h2>
+      <p>Ek colour se dusre colour mein smooth transition, jaise Red se Yellow.</p>
+      <div class="row">
+        <div class="demo grad grad-default"><h3>Thread Co</h3><small>linear-gradient(red, yellow)</small></div>
+        <div class="demo grad grad-right"><h3>Thread Co</h3><small>to right, red, blue</small></div>
+        <div class="demo grad grad-diagonal"><h3>Thread Co</h3><small>to top right, red, blue</small></div>
+      </div>
+    </section>
+
+    <!-- 2. BORDER -->
+    <section id="border">
+      <h2>2. Border</h2>
+      <p>Border likhne ke 2 tareeke: long way aur shorthand (width, style, color).</p>
+      <div class="row">
+        <div class="demo border-long"><h3>Long way</h3><small>border-width, border-style, border-color</small></div>
+        <div class="demo border-short"><h3>Shorthand</h3><small>border: 2px solid navy</small></div>
+      </div>
+    </section>
+
+    <!-- 3. BOX MODEL -->
+    <section id="boxmodel">
+      <h2>3. Box Model</h2>
+      <p>Content, padding, border aur margin. Neeche wale box mein har layer alag rang mein dikhayi hai.</p>
+      <div class="bm-wrapper">
+        <div class="bm-margin">
+          <div class="bm-box">Content</div>
+        </div>
+      </div>
+      <table class="calc">
+        <tr><th>Layer</th><th>Value (har taraf)</th></tr>
+        <tr><td>Content width</td><td>200px</td></tr>
+        <tr><td>Padding</td><td>40px</td></tr>
+        <tr><td>Border</td><td>10px</td></tr>
+        <tr><td>Margin</td><td>40px</td></tr>
+        <tr><td><strong>Total width</strong></td><td><strong>200 + 40 + 10 + 40 + 40 + 10 + 40 = 380px</strong></td></tr>
+      </table>
+      <p class="hint">Formula: content + (padding x 2) + (border x 2) + (margin x 2)</p>
+    </section>
+
+    <!-- 4. BOX-SIZING -->
+    <section id="boxsizing">
+      <h2>4. box-sizing</h2>
+      <p>Dono boxes ki <code>width: 300px</code>, padding 40px aur border 10px hai. Fark sirf <code>box-sizing</code> ka hai.</p>
+      <div class="row">
+        <div class="demo size-box content-box" data-label="content-box"><h3>content-box</h3><small class="measure"></small></div>
+        <div class="demo size-box border-box" data-label="border-box"><h3>border-box</h3><small class="measure"></small></div>
+      </div>
+      <p class="hint">content-box (default): width sirf content ki hoti hai, isliye box badi ho jaati hai. border-box: width mein padding aur border bhi shamil hain.</p>
+    </section>
+
+    <!-- ============ LECTURE 12 ============ -->
+
+    <!-- 5. DISPLAY -->
+    <section id="display">
+      <h2>5. Display</h2>
+
+      <h3>display: block</h3>
+      <p>Poori available width leta hai aur nayi line pe aata hai.</p>
+      <div class="d-block">Block 1</div>
+      <div class="d-block">Block 2</div>
+
+      <h3>display: inline</h3>
+      <p>Sirf content jitni jagah. <code>width</code> aur <code>height</code> kaam nahi karte, top/bottom margin bhi nahi.</p>
+      <div class="d-wrap">
+        <span class="d-inline">Inline 1</span>
+        <span class="d-inline">Inline 2</span>
+        <span class="d-inline">Inline 3</span>
+      </div>
+
+      <h3>display: inline-block</h3>
+      <p>Same line pe rehta hai, par width, height, padding aur margin properly kaam karte hain.</p>
+      <div class="d-wrap">
+        <span class="d-inline-block">Box 1</span>
+        <span class="d-inline-block">Box 2</span>
+        <span class="d-inline-block">Box 3</span>
+      </div>
+    </section>
+
+    <!-- 6. POSITION -->
+    <section id="position">
+      <h2>6. Position</h2>
+
+      <h3>static</h3>
+      <p>Default position. <code>top</code>, <code>left</code>, <code>right</code>, <code>bottom</code> accept nahi karta (neeche top: 30px diya hai, phir bhi box nahi hila).</p>
+      <div class="stage">
+        <div class="pos-item pos-static">static</div>
+        <div class="pos-item pos-plain">normal</div>
+      </div>
+
+      <h3>relative</h3>
+      <p>Apni normal position se move hota hai. Dotted outline woh jagah hai jahan box normally hota.</p>
+      <div class="stage">
+        <div class="pos-item pos-relative">relative</div>
+        <div class="pos-item pos-plain">normal</div>
+      </div>
+
+      <h3>absolute</h3>
+      <p>Document flow se bahar nikal jaata hai aur nearest positioned parent (yahan <code>.stage-rel</code>) ke relative rehta hai.</p>
+      <div class="stage stage-rel">
+        <div class="pos-item pos-plain">normal</div>
+        <div class="pos-item pos-absolute">absolute</div>
+      </div>
+
+      <h3>fixed</h3>
+      <p>Viewport ke relative rehta hai. Scroll karo, neeche-right wala "fixed" badge apni jagah par rahega.</p>
+
+      <h3>sticky</h3>
+      <p>Neeche wale box ko scroll karo. Heading relative se fixed mein switch ho jaati hai.</p>
+      <div class="scroll-box">
+        <div class="sticky-head">Sticky heading</div>
+        <p>Line 1: scroll karte raho.</p>
+        <p>Line 2: heading upar chipki rahegi.</p>
+        <p>Line 3: jab tak parent box khatam na ho.</p>
+        <p>Line 4: relative aur fixed ka mix.</p>
+        <p>Line 5: bas itna hi.</p>
+        <p>Line 6: aur thoda scroll.</p>
+      </div>
+    </section>
+
+    <!-- 7. UNITS -->
+    <section id="units">
+      <h2>7. Units</h2>
+      <p>Har bar ki width alag unit mein hai. Browser window ka size badlo aur dekho kaun scale hota hai.</p>
+
+      <div class="unit-bar u-px">px: 300px (fixed, scale nahi hota)</div>
+      <div class="unit-bar u-percent">%: 50% (parent ke hisaab se)</div>
+      <div class="unit-bar u-vw">vw: 40vw (browser window ki width ke hisaab se)</div>
+      <div class="unit-bar u-rem">rem: 20rem (root font size ke hisaab se)</div>
+      <div class="unit-bar u-em">em: 15em (is element ke parent font ke hisaab se)</div>
+      <div class="unit-vh">vh: height 20vh (browser window ki height ke hisaab se)</div>
+
+      <table class="calc">
+        <tr><th>Unit</th><th>Type</th><th>Scaling</th><th>Use case</th></tr>
+        <tr><td>px</td><td>Absolute</td><td>No</td><td>Borders, thin dividers, static sizes</td></tr>
+        <tr><td>rem</td><td>Relative</td><td>Root font</td><td>Typography, padding, margins</td></tr>
+        <tr><td>em</td><td>Relative</td><td>Parent font</td><td>Spacing tied to local text size</td></tr>
+        <tr><td>%</td><td>Relative</td><td>Parent box</td><td>Fluid widths, flexible columns</td></tr>
+        <tr><td>vw / vh</td><td>Relative</td><td>Browser window</td><td>Full-screen hero sections</td></tr>
+      </table>
+    </section>
+
+  </main>
+
+  <!-- position: fixed ka example -->
+  <div class="fixed-badge">fixed</div>
+
+  <script>
+    // box-sizing section: boxes ki actual width screen par dikhana
+    document.querySelectorAll(".size-box").forEach(function (box) {
+      var w = box.offsetWidth;
+      box.querySelector(".measure").textContent = "Actual width: " + w + "px";
+    });
+  </script>
+</body>
+</html>

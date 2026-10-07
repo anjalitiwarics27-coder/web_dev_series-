@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flexbox - Lecture 13 | Coding &amp; Web Development</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header">
+    <div class="wrap">
+      <h1>Flexbox</h1>
+      <p>Lecture 13 &middot; Coding &amp; Web Development &middot; Nishant Sir</p>
+    </div>
+  </header>
+
+  <!-- ============ TABLE OF CONTENTS ============ -->
+  <nav class="toc" aria-label="Topics">
+    <div class="wrap">
+      <a href="#intro">Flexbox kya hai</a>
+      <a href="#problem">inline-block ka gap</a>
+      <a href="#flex-start">display: flex</a>
+      <a href="#justify">justify-content</a>
+      <a href="#math">Gap ka math</a>
+      <a href="#revision">Revision</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+
+    <!-- =====================================================
+         1. INTRO: Flexbox = Flexible + Box
+         ===================================================== -->
+    <section id="intro">
+      <h2>1. Flexbox kya hai?</h2>
+      <p>
+        <strong>Flexbox = Flexible + Box.</strong> Ye ek CSS layout model hai jo container ke andar ke
+        items ko ek line (row ya column) me <em>arrange, align aur space-distribute</em> karta hai.
+        Container ki size badle to items khud adjust ho jaate hain.
+      </p>
+
+      <div class="terms">
+        <div class="term">
+          <h3>Flex container</h3>
+          <p>Parent element jisme <code>display: flex</code> lagta hai.</p>
+        </div>
+        <div class="term">
+          <h3>Flex items</h3>
+          <p>Container ke <u>direct children</u>. Grandchildren flex item nahi bante.</p>
+        </div>
+        <div class="term">
+          <h3>Main axis</h3>
+          <p>Items ki chalne ki direction (default: left to right). <code>justify-content</code> isi par kaam karta hai.</p>
+        </div>
+        <div class="term">
+          <h3>Cross axis</h3>
+          <p>Main axis ke perpendicular (default: top to bottom). <code>align-items</code> isi par kaam karta hai.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         2. PROBLEM: inline-block whitespace gap
+         ===================================================== -->
+    <section id="problem">
+      <h2>2. Flexbox se pehle: inline-block ka whitespace gap</h2>
+      <p>
+        Cards ko ek line me laane ke liye <code>display: inline-block</code> use hota tha. Par cards ke beech
+        ek chhota gap aa jaata hai. Reason: HTML me do tags ke beech jo <strong>space / Enter</strong> hota hai,
+        browser use ek <strong>text space character</strong> maanta hai, aur inline-block elements text ki tarah
+        inline flow me baithte hain, isliye wo space render ho jaata hai (~4px).
+      </p>
+
+      <!-- Demo A: gap dikh raha hai -->
+      <h3>Problem: cards ke beech gap</h3>
+      <div class="demo inline-demo">
+        <!-- Dhyan do: har card alag line me likha hai, isi newline ki wajah se gap aata hai -->
+        <div class="card">card 1</div>
+        <div class="card">card 2</div>
+        <div class="card">card 3</div>
+        <div class="card">card 4</div>
+        <div class="card">card 5</div>
+        <div class="card">card 6</div>
+      </div>
+      <pre><code>.inline-demo .card { display: inline-block; }   /* gap aayega */</code></pre>
+
+      <!-- Demo B: fix = font-size: 0 -->
+      <h3>Purana fix: parent par font-size: 0</h3>
+      <div class="demo inline-demo inline-fix">
+        <div class="card">card 1</div>
+        <div class="card">card 2</div>
+        <div class="card">card 3</div>
+        <div class="card">card 4</div>
+        <div class="card">card 5</div>
+        <div class="card">card 6</div>
+      </div>
+      <pre><code>.inline-fix { font-size: 0; }   /* space ka size 0 ho gaya */
+.inline-fix .card { font-size: 1rem; }  /* card ka text wapas normal */</code></pre>
+
+      <ul class="points">
+        <li>Doosra fix: tags ke beech ka whitespace hata do (sab ek hi line me likho ya HTML comment lagao).</li>
+        <li><strong>Best fix = Flexbox:</strong> flex items ke beech ka whitespace ignore hota hai, to gap aata hi nahi.</li>
+      </ul>
+    </section>
+
+    <!-- =====================================================
+         3. display: flex (flex-start default)
+         ===================================================== -->
+    <section id="flex-start">
+      <h2>3. display: flex lagate hi kya hota hai?</h2>
+      <p>
+        Parent par sirf <code>display: flex</code> likho: saare items ek row me aa jaate hain
+        (<code>flex-direction: row</code> default hai) aur apni content-width jitni jagah lete hain.
+        <strong>Free space</strong> = container width &minus; saare items ki width ka sum.
+        Neeche light-blue hissa free space hai.
+      </p>
+
+      <div class="demo flex-demo">
+        <div class="card">card 1</div>
+        <div class="card">card 2</div>
+        <div class="card">card 3</div>
+        <div class="card">card 4</div>
+        <div class="card">card 5</div>
+        <div class="card">card 6</div>
+      </div>
+      <pre><code>.flex-demo {
+  display: flex;   /* sirf itna: items row me, gap nahi */
+}</code></pre>
+    </section>
+
+    <!-- =====================================================
+         4. justify-content (main axis)
+         ===================================================== -->
+    <section id="justify">
+      <h2>4. justify-content: main axis par spacing</h2>
+      <p>
+        <code>justify-content</code> <strong>parent (container) par</strong> lagta hai, items par nahi.
+        Ye free space ko items ke beech/aas-paas distribute karta hai.
+      </p>
+
+      <!-- flex-start -->
+      <h3>flex-start (default)</h3>
+      <p>Sab items start (left) me, free space end me.</p>
+      <div class="demo flex-demo jc-start">
+        <div class="card">card 1</div><div class="card">card 2</div><div class="card">card 3</div>
+        <div class="card">card 4</div><div class="card">card 5</div><div class="card">card 6</div>
+      </div>
+      <pre><code>justify-content: flex-start;</code></pre>
+
+      <!-- center -->
+      <h3>center</h3>
+      <p>Items beech me, free space dono side barabar.</p>
+      <div class="demo flex-demo jc-center">
+        <div class="card">card 1</div><div class="card">card 2</div><div class="card">card 3</div>
+        <div class="card">card 4</div><div class="card">card 5</div><div class="card">card 6</div>
+      </div>
+      <pre><code>justify-content: center;</code></pre>
+
+      <!-- flex-end -->
+      <h3>flex-end</h3>
+      <p>Sab items end (right) me, free space shuru me.</p>
+      <div class="demo flex-demo jc-end">
+        <div class="card">card 1</div><div class="card">card 2</div><div class="card">card 3</div>
+        <div class="card">card 4</div><div class="card">card 5</div><div class="card">card 6</div>
+      </div>
+      <pre><code>justify-content: flex-end;</code></pre>
+
+      <!-- space-around -->
+      <h3>space-around</h3>
+      <p>
+        Har item ke <u>dono side</u> barabar space. Isliye <strong>edge gap = beech ke gap ka aadha</strong>
+        (beech me do items ke aadhe-aadhe hisse mil kar poora gap banta hai).
+      </p>
+      <div class="demo flex-demo jc-around">
+        <div class="card">card 1</div><div class="card">card 2</div><div class="card">card 3</div>
+        <div class="card">card 4</div><div class="card">card 5</div><div class="card">card 6</div>
+      </div>
+      <pre><code>justify-content: space-around;</code></pre>
+
+      <!-- space-between -->
+      <h3>space-between</h3>
+      <p>
+        Pehla item bilkul start par, aakhri bilkul end par. Beech ke <strong>(n&minus;1) gaps barabar</strong>.
+        Edge gap = 0.
+      </p>
+      <div class="demo flex-demo jc-between">
+        <div class="card">card 1</div><div class="card">card 2</div><div class="card">card 3</div>
+        <div class="card">card 4</div><div class="card">card 5</div><div class="card">card 6</div>
+      </div>
+      <pre><code>justify-content: space-between;</code></pre>
+
+      <!-- space-evenly -->
+      <h3>space-evenly</h3>
+      <p>
+        <strong>Saare gaps barabar</strong>: edges ke bhi aur beech ke bhi. Total gaps = n + 1.
+      </p>
+      <div class="demo flex-demo jc-evenly">
+        <div class="card">card 1</div><div class="card">card 2</div><div class="card">card 3</div>
+        <div class="card">card 4</div><div class="card">card 5</div><div class="card">card 6</div>
+      </div>
+      <pre><code>justify-content: space-evenly;</code></pre>
+    </section>
+
+    <!-- =====================================================
+         5. GAP KA MATH
+         ===================================================== -->
+    <section id="math">
+      <h2>5. Gap ka math (example)</h2>
+      <p>
+        Maan lo container = <strong>600px</strong>, 6 cards &times; <strong>60px</strong> = 360px.
+        Free space <strong>F = 240px</strong>, n = 6.
+      </p>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>Value</th><th>Formula</th><th>Edge gap</th><th>Beech ka gap</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>space-around</code></td><td>F / n = 240 / 6 = 40 per item (20 + 20)</td><td>20px</td><td>20 + 20 = <strong>40px</strong></td></tr>
+            <tr><td><code>space-between</code></td><td>F / (n &minus; 1) = 240 / 5</td><td>0px</td><td><strong>48px</strong></td></tr>
+            <tr><td><code>space-evenly</code></td><td>F / (n + 1) = 240 / 7</td><td><strong>~34.3px</strong></td><td><strong>~34.3px</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         6. REVISION
+         ===================================================== -->
+    <section id="revision">
+      <h2>6. Revision: yaad rakhne ki baatein</h2>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>Property</th><th>Edges par space?</th><th>Trick</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>space-around</code></td><td>Haan, aadha</td><td>Har item ke <strong>around</strong> barabar jagah</td></tr>
+            <tr><td><code>space-between</code></td><td>Nahi</td><td>Space sirf items ke <strong>between</strong></td></tr>
+            <tr><td><code>space-evenly</code></td><td>Haan, poora</td><td><strong>Evenly</strong>: har jagah same</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ul class="points">
+        <li><code>justify-content</code> parent par lagta hai, items par nahi.</li>
+        <li>Agar items poori width le lete hain (free space = 0), to space-around/between/evenly ka effect nahi dikhega.</li>
+        <li>Default <code>flex-direction: row</code> hai. <code>column</code> karte hi main axis vertical ho jaata hai aur <code>justify-content</code> bhi vertical chalta hai.</li>
+        <li>Sirf <strong>direct children</strong> flex items bante hain. Nested elements ko alag se <code>display: flex</code> dena padta hai.</li>
+        <li><code>justify-content</code> = main axis, <code>align-items</code> = cross axis.</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">Flexbox &middot; Lecture 13 &middot; Summary code notes</div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,267 @@
+/* =========================================================
+   CSS Lecture 11 – Gradient, Box Model, Border, box-sizing
+   ========================================================= */
+
+/* ---------- Page basics ---------- */
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: #f3f5f9;
+  color: #1c2433;
+  line-height: 1.5;
+}
+
+.page-head {
+  background: #1f3a5f;
+  color: #fff;
+  padding: 24px 32px;
+}
+.page-head h1 { margin: 0; font-size: 28px; }
+.page-head p  { margin: 4px 0 0; opacity: 0.8; }
+
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 20px 60px;
+}
+
+section {
+  background: #fff;
+  border: 1px solid #d5dbe6;
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  overflow-x: auto;           /* wide demos scroll instead of breaking layout */
+}
+
+h2 {
+  margin: 0 0 4px;
+  color: #1f3a5f;
+  font-size: 20px;
+}
+
+.hint {
+  margin: 0 0 16px;
+  color: #5a6678;
+  font-size: 14px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+figure { margin: 0; }
+figcaption {
+  margin-top: 6px;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 12px;
+  color: #b3261e;
+}
+
+.demo {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* =========================================================
+   1. BACKGROUND GRADIENT
+   Syntax: background: <type>-gradient(direction, color1, color2);
+   ========================================================= */
+
+/* Red -> Yellow (board wala example) */
+.g-red-yellow {
+  background: linear-gradient(to right, red, yellow);
+}
+
+/* LINEAR: left se right */
+.g-linear-horizontal {
+  background: linear-gradient(to right, red, blue);
+}
+
+/* LINEAR: diagonal, neeche-left se upar-right */
+.g-linear-diagonal {
+  background: linear-gradient(to top right, red, blue);
+}
+
+/* RADIAL: center se bahar ki taraf */
+.g-radial {
+  background: radial-gradient(circle, red, yellow);
+}
+
+/* CONIC: center ke around ghoomta hua (color wheel) */
+.g-conic {
+  background: conic-gradient(red, yellow, red);
+}
+
+/* 2 se zyada colors */
+.g-multi {
+  background: linear-gradient(to right, red, yellow, green);
+}
+
+/* =========================================================
+   2. BOX MODEL
+   Content -> Padding -> Border -> Margin
+   ========================================================= */
+
+/* Stage ka background = margin area dikhane ke liye */
+.bm-stage {
+  display: inline-block;             /* margin ko andar hi rakhta hai */
+  background: #e8c58a;
+  outline: 1px dashed #8a6a2f;
+}
+
+.bm-box {
+  width: 160px;                      /* content width */
+  padding: 40px;                     /* content aur border ke beech */
+  border: 10px solid #1f3a5f;        /* box ki line */
+  margin: 40px;                      /* box ke bahar ki jagah */
+  background: #b9cf8a;               /* padding area ka color */
+}
+
+.bm-content {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #8ab4c9;               /* content area ka color */
+  font-weight: 700;
+}
+
+/* Legend swatches */
+.legend {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  font-size: 14px;
+}
+.legend li { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.sw { width: 16px; height: 16px; border: 1px solid #555; }
+.sw-content { background: #8ab4c9; }
+.sw-padding { background: #b9cf8a; }
+.sw-border  { background: #1f3a5f; }
+.sw-margin  { background: #e8c58a; }
+
+/* =========================================================
+   3. BORDER
+   Long way  : border-width + border-style + border-color
+   Shorthand : border: width style color;
+   ========================================================= */
+
+.border-long {
+  color: #1c2433;
+  text-shadow: none;
+  /* long way */
+  border-width: 3px;
+  border-style: solid;
+  border-color: red;
+}
+
+.border-short {
+  color: #1c2433;
+  text-shadow: none;
+  /* shorthand */
+  border: 3px solid navy;
+}
+
+.border-dashed {
+  color: #1c2433;
+  text-shadow: none;
+  border: 3px dashed green;
+}
+
+.border-dotted {
+  color: #1c2433;
+  text-shadow: none;
+  border: 4px dotted purple;
+}
+
+/* =========================================================
+   4. TOTAL WIDTH
+   Total = content + 2*padding + 2*border + 2*margin
+   Yahan: 300 + 80 + 20 + 80 = 480px
+   ========================================================= */
+
+.calc-wrap {
+  background: #e8c58a;               /* margin area */
+  width: 480px;                      /* total width = 480px */
+  max-width: none;
+  margin-bottom: 16px;
+}
+
+.calc-box {
+  width: 300px;                      /* content */
+  padding: 40px;                     /* 40 + 40 */
+  border: 10px solid #1f3a5f;        /* 10 + 10 */
+  margin: 0 40px;                    /* 40 + 40 (left/right) */
+  background: #b9cf8a;
+}
+
+.calc-content {
+  background: #8ab4c9;
+  text-align: center;
+  padding: 12px 0;
+  font-weight: 700;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 460px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+th, td {
+  border: 1px solid #c9d3e3;
+  padding: 6px 10px;
+  text-align: left;
+}
+th { background: #2f6fde; color: #fff; }
+tbody tr:nth-child(even) { background: #eaf1fb; }
+tr.total td { font-weight: 700; background: #fff6d6; }
+
+/* =========================================================
+   5. BOX-SIZING
+   content-box (default): width = sirf content, padding+border upar se add
+   border-box           : width = content + padding + border
+   ========================================================= */
+
+.ruler {
+  width: 300px;                      /* reference: set ki hui width */
+  border-top: 3px solid #b3261e;
+  margin-bottom: 10px;
+  font-size: 12px;
+  color: #b3261e;
+}
+
+.bs-row { margin-bottom: 14px; }
+
+.bs-box {
+  width: 300px;
+  padding: 40px;
+  border: 10px solid #1f3a5f;
+  font-size: 14px;
+}
+
+.bs-content {
+  box-sizing: content-box;           /* default: 300 + 80 + 20 = 400px */
+  background: #f6c9c4;
+}
+
+.bs-border {
+  box-sizing: border-box;            /* 300px total, content sikud kar 200px */
+  background: #c6e6c1;
+}
+
+/* Best practice: poore project mein border-box lagana
+   (is demo mein nahi lagaya, taaki content-box ka difference dikhe)
+
+   * { box-sizing: border-box; }
+*/

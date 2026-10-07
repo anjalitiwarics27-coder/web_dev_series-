@@ -1,0 +1,303 @@
+/* =========================================================
+   Lecture 11 & 12 - Practice Page
+   ========================================================= */
+
+:root {
+  --ink: #14213d;
+  --paper: #f3f5f9;
+  --line: #cfd6e4;
+  --accent: #0f8b8d;
+  --warn: #e76f51;
+}
+
+/* Page ka basic setup */
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+code {
+  font-family: ui-monospace, "SF Mono", Consolas, monospace;
+  font-size: 0.9em;
+  background: #e3e8f2;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+/* ---------- Sticky top bar (position: sticky) ---------- */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding: 10px 24px;
+  background: var(--ink);
+  color: #fff;
+}
+.topbar nav a {
+  color: #cfe9ea;
+  text-decoration: none;
+  margin-right: 14px;
+  font-size: 0.95rem;
+}
+.topbar nav a:hover,
+.topbar nav a:focus-visible {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* ---------- Page layout ---------- */
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+h1 { font-size: 2rem; margin-bottom: 4px; }
+.lead { margin-top: 0; color: #4a5875; }
+
+section {
+  margin-top: 40px;
+  padding-top: 8px;
+  border-top: 2px solid var(--line);
+  scroll-margin-top: 70px;      /* sticky bar ke neeche heading na chhupe */
+}
+h2 { font-size: 1.5rem; margin-bottom: 4px; }
+h3 { font-size: 1.05rem; margin: 20px 0 4px; }
+.hint { font-size: 0.9rem; color: #4a5875; }
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.demo {
+  flex: 1 1 240px;
+  min-height: 120px;
+  padding: 12px;
+  background: #fff;
+}
+.demo h3 { margin: 0; }
+.demo small { display: block; margin-top: 4px; }
+
+/* =========================================================
+   LECTURE 11
+   ========================================================= */
+
+/* ---------- 1. Background gradient ---------- */
+.grad { color: #fff; }
+.grad h3, .grad small { text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); }
+
+.grad-default  { background: linear-gradient(red, yellow); color: var(--ink); text-shadow: none; }
+.grad-default h3, .grad-default small { text-shadow: none; }
+.grad-right    { background: linear-gradient(to right, red, blue); }
+.grad-diagonal { background: linear-gradient(to top right, red, blue); }
+
+/* ---------- 2. Border ---------- */
+/* Long way */
+.border-long {
+  border-width: 3px;
+  border-style: solid;
+  border-color: red;
+}
+/* Shorthand: width style color */
+.border-short {
+  border: 3px solid navy;
+}
+
+/* ---------- 3. Box model ---------- */
+.bm-wrapper { overflow-x: auto; }
+
+/* Margin ka area dikhane ke liye ek wrapper (orange) */
+.bm-margin {
+  display: inline-block;
+  background: #f9cb9c;           /* margin = orange */
+  padding: 40px;                 /* wrapper ka padding = box ka margin dikhata hai */
+}
+.bm-box {
+  width: 200px;                  /* content (blue) */
+  height: 60px;
+  padding: 40px;                 /* padding (green) */
+  border: 10px solid #d4a017;    /* border (yellow) */
+  /* content = blue, padding = green (padding-box tak) */
+  background: linear-gradient(#9fc5e8, #9fc5e8) content-box, #b6d7a8 padding-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.calc {
+  width: 100%;
+  margin-top: 16px;
+  border-collapse: collapse;
+  background: #fff;
+  font-size: 0.95rem;
+}
+.calc th, .calc td {
+  border: 1px solid var(--line);
+  padding: 8px 12px;
+  text-align: left;
+}
+.calc th { background: var(--ink); color: #fff; }
+
+/* ---------- 4. box-sizing ---------- */
+.size-box {
+  flex: 0 0 auto;
+  width: 300px;
+  min-height: 0;
+  padding: 40px;
+  border: 10px solid var(--accent);
+}
+.content-box { box-sizing: content-box; }  /* default: total 300 + 80 + 20 = 400px */
+.border-box  { box-sizing: border-box; }   /* total hamesha 300px */
+
+/* =========================================================
+   LECTURE 12
+   ========================================================= */
+
+/* ---------- 5. Display ---------- */
+/* block: poori width, nayi line */
+.d-block {
+  display: block;
+  background: #bde0fe;
+  padding: 10px;
+  margin-bottom: 6px;
+}
+
+.d-wrap { background: #fff; padding: 10px; border: 1px dashed var(--line); }
+
+/* inline: width/height/top-bottom margin ignore hote hain */
+.d-inline {
+  display: inline;
+  width: 200px;                  /* kaam nahi karega */
+  height: 80px;                  /* kaam nahi karega */
+  margin: 30px;                  /* sirf left/right asar karenge */
+  padding: 10px;
+  background: #ffd6a5;
+}
+
+/* inline-block: same line + width/height kaam karte hain */
+.d-inline-block {
+  display: inline-block;
+  width: 120px;
+  height: 60px;
+  margin: 10px;
+  padding: 10px;
+  background: #caffbf;
+  box-sizing: border-box;
+}
+
+/* ---------- 6. Position ---------- */
+.stage {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  background: #fff;
+  border: 1px dashed var(--line);
+  min-height: 90px;
+}
+.pos-item {
+  width: 110px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.pos-plain { background: #e3e8f2; }
+
+/* static: top/left ignore hota hai */
+.pos-static {
+  position: static;
+  top: 30px;
+  left: 30px;
+  background: #bde0fe;
+}
+
+/* relative: apni normal jagah se move */
+.pos-relative {
+  position: relative;
+  top: 20px;
+  left: 30px;
+  background: #ffd6a5;
+  outline: 2px dotted var(--warn);
+  outline-offset: -2px;
+}
+
+/* absolute: nearest positioned parent (.stage-rel) ke relative */
+.stage-rel { position: relative; }
+.pos-absolute {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #caffbf;
+}
+
+/* fixed: viewport ke relative, scroll par bhi wahin */
+.fixed-badge {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  padding: 10px 16px;
+  background: var(--warn);
+  color: #fff;
+  font-weight: 700;
+  border-radius: 999px;
+}
+
+/* sticky: scroll par relative se fixed */
+.scroll-box {
+  height: 160px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid var(--line);
+}
+.scroll-box p { margin: 0; padding: 14px 12px; }
+.sticky-head {
+  position: sticky;
+  top: 0;
+  padding: 8px 12px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* ---------- 7. Units ---------- */
+.unit-bar {
+  box-sizing: border-box;
+  margin: 8px 0;
+  padding: 10px;
+  max-width: 100%;
+  background: #cdb4db;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.u-px      { width: 300px; }
+.u-percent { width: 50%; }
+.u-vw      { width: 40vw; }
+.u-rem     { width: 20rem; }
+.u-em      { width: 15em; }
+
+.unit-vh {
+  box-sizing: border-box;
+  height: 20vh;
+  min-height: 50px;
+  padding: 10px;
+  margin-top: 8px;
+  background: #a2d2ff;
+}
+
+/* ---------- Chhoti screen ---------- */
+@media (max-width: 600px) {
+  .size-box { width: 100%; }
+  .topbar { padding: 10px 14px; }
+}

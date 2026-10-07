@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Lecture 11 – Gradient, Box Model, Border, box-sizing</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="page-head">
+    <h1>CSS Lecture 11</h1>
+    <p>Background gradient · Box model · Border · Total width · box-sizing</p>
+  </header>
+
+  <main>
+
+    <!-- ============ 1. BACKGROUND GRADIENT ============ -->
+    <section>
+      <h2>1. Background Gradient</h2>
+      <p class="hint">Ek color dheere-dheere doosre color mein badalta hai (Red → Yellow).</p>
+
+      <div class="grid">
+        <figure>
+          <div class="demo g-red-yellow">Red → Yellow</div>
+          <figcaption>linear-gradient(to right, red, yellow)</figcaption>
+        </figure>
+
+        <figure>
+          <div class="demo g-linear-horizontal">Thread Co</div>
+          <figcaption>Linear – left to right<br>linear-gradient(to right, red, blue)</figcaption>
+        </figure>
+
+        <figure>
+          <div class="demo g-linear-diagonal">Thread Co</div>
+          <figcaption>Linear – diagonal<br>linear-gradient(to top right, red, blue)</figcaption>
+        </figure>
+
+        <figure>
+          <div class="demo g-radial">Radial</div>
+          <figcaption>Center se bahar<br>radial-gradient(circle, red, yellow)</figcaption>
+        </figure>
+
+        <figure>
+          <div class="demo g-conic">Conic</div>
+          <figcaption>Center ke around ghoomta hua<br>conic-gradient(red, yellow, red)</figcaption>
+        </figure>
+
+        <figure>
+          <div class="demo g-multi">3 colors</div>
+          <figcaption>2 se zyada colors<br>linear-gradient(to right, red, yellow, green)</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ 2. BOX MODEL ============ -->
+    <section>
+      <h2>2. Box Model</h2>
+      <p class="hint">Content → Padding → Border → Margin (andar se bahar).</p>
+
+      <div class="bm-stage">
+        <div class="bm-box">
+          <div class="bm-content">house</div>
+        </div>
+      </div>
+
+      <ul class="legend">
+        <li><span class="sw sw-content"></span> Content – text/image; size width &amp; height se</li>
+        <li><span class="sw sw-padding"></span> Padding – content aur border ke beech ki jagah</li>
+        <li><span class="sw sw-border"></span> Border – content + padding ke around line</li>
+        <li><span class="sw sw-margin"></span> Margin – box ke bahar ki jagah (dashed area)</li>
+      </ul>
+    </section>
+
+    <!-- ============ 3. BORDER ============ -->
+    <section>
+      <h2>3. Border</h2>
+      <p class="hint">Do tarike: long way aur shorthand (width → style → color).</p>
+
+      <div class="grid">
+        <figure>
+          <div class="demo border-long">Long way</div>
+          <figcaption>border-width: 3px;<br>border-style: solid;<br>border-color: red;</figcaption>
+        </figure>
+
+        <figure>
+          <div class="demo border-short">Shorthand</div>
+          <figcaption>border: 3px solid navy;</figcaption>
+        </figure>
+
+        <figure>
+          <div class="demo border-dashed">Dashed</div>
+          <figcaption>border: 3px dashed green;</figcaption>
+        </figure>
+
+        <figure>
+          <div class="demo border-dotted">Dotted</div>
+          <figcaption>border: 4px dotted purple;</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ 4. TOTAL WIDTH ============ -->
+    <section>
+      <h2>4. Total Width ki Calculation</h2>
+      <p class="hint">Total = content + 2×padding + 2×border + 2×margin</p>
+
+      <div class="calc-wrap">
+        <div class="calc-box">
+          <div class="calc-content">content 300px</div>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>Part</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Content</td><td>300px</td></tr>
+          <tr><td>Padding (left + right)</td><td>40 + 40 = 80px</td></tr>
+          <tr><td>Border (left + right)</td><td>10 + 10 = 20px</td></tr>
+          <tr><td>Margin (left + right)</td><td>40 + 40 = 80px</td></tr>
+          <tr class="total"><td>Total</td><td>300 + 80 + 20 + 80 = 480px</td></tr>
+        </tbody>
+      </table>
+
+      <p class="hint">Class example: 934 + 40 + 10 + 40 + 40 + 10 + 40 = <strong>1114</strong> (1181 galat tha).</p>
+    </section>
+
+    <!-- ============ 5. BOX-SIZING ============ -->
+    <section>
+      <h2>5. box-sizing</h2>
+      <p class="hint">Dono boxes mein width: 300px, padding: 40px, border: 10px – bas box-sizing alag hai.</p>
+
+      <div class="ruler">300px</div>
+
+      <div class="bs-row">
+        <div class="bs-box bs-content">
+          content-box<br>
+          visible width = 300 + 80 + 20 = 400px
+        </div>
+      </div>
+
+      <div class="bs-row">
+        <div class="bs-box bs-border">
+          border-box<br>
+          visible width = 300px<br>
+          content = 300 − 80 − 20 = 200px
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
